@@ -1,4 +1,7 @@
 ## swagger-dubbo
+
+[![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo)
+
 Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，致力于提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。  
 Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest api的开源工具。
 
@@ -11,6 +14,7 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 所有集成都是基于spring配置。swagger v2.0、dubbo2.5.3+。
 
 1. Maven依赖
+
 ```
 <dependency>
   <groupId>com.deepoove</groupId>
@@ -42,6 +46,7 @@ public class SwaggerDubboConfig {
 ```
 
 3. 配置swagger-dubbo
+
 新增property文件swagger-dubbo.properties：
 在spring xml配置中，加载配置文件。
 
