@@ -13,5 +13,4 @@ bin/
 hs_err_pid*
 /target/
 **/target/
-swagger-dubbo-example/dubbo-provider/target/
 

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.deepoove.swagger.dubbo.config.DubboPropertyConfig;
 import com.deepoove.swagger.dubbo.config.DubboServiceScanner;
-import com.deepoove.swagger.dubbo.config.SwaggerCache;
+import com.deepoove.swagger.dubbo.config.SwaggerDocCache;
 import com.deepoove.swagger.dubbo.reader.Reader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -28,11 +28,11 @@ import io.swagger.util.Json;
 public class SwaggerDubboController {
 
 	@Autowired
-	private DubboServiceScanner scanner;
+	private DubboServiceScanner dubboServiceScanner;
 	@Autowired
-	private DubboPropertyConfig config;
+	private DubboPropertyConfig dubboPropertyConfig;
 	@Autowired
-	private SwaggerCache swaggerCache;
+	private SwaggerDocCache swaggerDocCache;
 
 	@Value("${swagger.dubbo.http:h}")
 	private String httpContext;
@@ -49,23 +49,23 @@ public class SwaggerDubboController {
 			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 		
-		Swagger swagger = swaggerCache.getSwagger();
+		Swagger swagger = swaggerDocCache.getSwagger();
 		if (null != swagger){
 			return new ResponseEntity<String>(Json.mapper().writeValueAsString(swagger), HttpStatus.OK);
 		}else{
 			swagger = new Swagger();
 		}
 
-		final SwaggerConfig configurator = config;
+		final SwaggerConfig configurator = dubboPropertyConfig;
 		if (configurator != null) {
 			configurator.configure(swagger);
 		}
 
-		Map<Class<?>, Object> interfaceMapRef = scanner.interfaceMapRef();
+		Map<Class<?>, Object> interfaceMapRef = dubboServiceScanner.interfaceMapRef();
 		if (null != interfaceMapRef) {
 			Reader.read(swagger, interfaceMapRef, httpContext);
 		}
-		swaggerCache.setSwagger(swagger);
+		swaggerDocCache.setSwagger(swagger);
 		return new ResponseEntity<String>(Json.mapper().writeValueAsString(swagger), HttpStatus.OK);
 	}
 

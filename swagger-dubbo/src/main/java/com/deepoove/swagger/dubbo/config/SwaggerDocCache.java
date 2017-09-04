@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import io.swagger.models.Swagger;
 
 @Component
-public class SwaggerCache {
+public class SwaggerDocCache {
 
 	private Swagger swagger;
 

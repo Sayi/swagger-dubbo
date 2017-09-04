@@ -42,7 +42,7 @@ public class DubboHttpController {
 	private static Logger logger = LoggerFactory.getLogger(DubboHttpController.class);
 
 	@Autowired
-	private DubboServiceScanner scanner;
+	private DubboServiceScanner dubboServiceScanner;
 
 	@Value("${swagger.dubbo.annotation.class:true}")
 	private boolean classAnotation = true;
@@ -69,7 +69,7 @@ public class DubboHttpController {
 		Method method = null;
 		Object invoke = null;
 		// find ref class
-		Map<Class<?>, Object> interfaceMapRef = scanner.interfaceMapRef();
+		Map<Class<?>, Object> interfaceMapRef = dubboServiceScanner.interfaceMapRef();
 		Set<Entry<Class<?>, Object>> entrySet = interfaceMapRef.entrySet();
 		for (Entry<Class<?>, Object> entry : entrySet) {
 			Class<?> key = entry.getKey();
