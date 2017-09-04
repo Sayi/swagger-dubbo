@@ -51,7 +51,7 @@ public class SwaggerDubboConfig {
 在spring xml配置中，加载配置文件。
 
 ```xml
-<context:property-placeholder location="classpath*:swagger-dubbo.properties" />```
+<context:property-placeholder location="classpath*:swagger-dubbo.properties" />
 ```
 
 配置项说明：
