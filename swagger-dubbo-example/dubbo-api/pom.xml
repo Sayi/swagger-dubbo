@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.deepoove</groupId>
+		<artifactId>swagger-dubbo-example</artifactId>
+		<version>1.0.0-alpha</version>
+	</parent>
+	<groupId>com.deepoove</groupId>
+	<artifactId>dubbo-api</artifactId>
+	<packaging>jar</packaging>
+	<name>dubbo-api</name>
+	<url>http://maven.apache.org</url>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>io.swagger</groupId>
+			<artifactId>swagger-core</artifactId>
+			<version>1.5.16</version>
+		</dependency>
+	</dependencies>
+</project>
