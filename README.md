@@ -75,7 +75,9 @@ swagger.dubbo.application.artifactId = dubbo.api
 4. 启动web容器，浏览器访问 `http://ip:port/context/swagger-dubbo/swagger.json`
 
 
-## 集成swagger-ui
+## 示例与集成swagger-ui
+示例参见swagger-dubbo-example。  
+
 如何集成swagger-ui，参见官方文档 [GitHub Swagger UI](https://github.com/swagger-api/swagger-ui)
 
 ## swagger-dubbo集成注意事项
@@ -85,7 +87,7 @@ swagger.dubbo.application.artifactId = dubbo.api
 
 * Object对象作为http请求参数为json string格式。格式不正确会导致解析错误。下一版本考虑参数json格式可视化。
 
-      
+* swagger注解既可以写在接口上，也可以写在实现类上。     
  
 
 
