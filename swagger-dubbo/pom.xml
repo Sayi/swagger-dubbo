@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.deepoove</groupId>
 		<artifactId>swagger-dubbo-project</artifactId>
-		<version>1.0.0-alpha</version>
+		<version>1.0.2-alpha</version>
 	</parent>
 	<artifactId>swagger-dubbo</artifactId>
 	<packaging>jar</packaging>

@@ -190,18 +190,18 @@ public class DubboReaderExtension implements ReaderExtension {
 			Class<?>[] exceptionTypes = method.getExceptionTypes();
 			StringBuilder sb = new StringBuilder();
 
-			sb.append(method.getReturnType().getTypeName()).append(" ").append(method.getName());
+			sb.append(method.getReturnType().getSimpleName()).append(" ").append(method.getName());
 
 			sb.append('(');
 			for (int j = 0; j < types.length; j++) {
-				sb.append(types[j].getTypeName());
+				sb.append(types[j].getName());
 				if (j < (types.length - 1)) sb.append(",");
 			}
 			sb.append(')');
 			if (exceptionTypes.length > 0) {
 				sb.append(" throws ");
 				for (int j = 0; j < exceptionTypes.length; j++) {
-					sb.append(exceptionTypes[j].getTypeName());
+					sb.append(exceptionTypes[j].getSimpleName());
 					if (j < (exceptionTypes.length - 1)) sb.append(",");
 				}
 			}
