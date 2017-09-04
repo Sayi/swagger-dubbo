@@ -15,7 +15,7 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 
 1. Maven依赖
 
-```
+```xml
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
@@ -26,7 +26,7 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 2. 启用swagger-dubbo
 
 使用注解 `@EnableDubboSwagger`开启dubbo的swagger文档。
-```
+```java
 package com.deepoove.swagger.dubbo.example;
 
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +40,7 @@ public class SwaggerDubboConfig {
 
 ```
 在spring xml配置中，打开Configuration注解，申明SwaggerDubboConfig。
-```
+```xml
 <context:annotation-config />
 <bean class="com.deepoove.swagger.dubbo.example.SwaggerDubboConfig" />
 ```
@@ -50,12 +50,12 @@ public class SwaggerDubboConfig {
 新增property文件swagger-dubbo.properties：
 在spring xml配置中，加载配置文件。
 
-```
+```xml
 <context:property-placeholder location="classpath*:swagger-dubbo.properties" />```
 ```
 
 配置项说明：
-```
+```properties
 #doc地址，默认为http://ip:port/context/swagger-dubbo/swagger.json
 #swagger.dubbo.doc=swagger-dubbo
 #http请求地址，默认为http://ip:port/h/com.XXX.XxService/method
