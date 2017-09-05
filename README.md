@@ -83,11 +83,16 @@ swagger.dubbo.application.artifactId = dubbo.api
 ## swagger-dubbo集成注意事项
 * 对于服务接口方法重载，为了在http请求中唯一确认一个方法，需要使用注解`@ApiOperation(nickname = "byArea")`,通过nickname标记唯一路径(如果不填写，将只显示一个方法)。此时，rest的请求地址为：`http://ip:port/h/com.XXX.XxService/method/byArea`
 
-* 原生类型作为http请求参数为必填。
+[Stackoverflow:重载的方法能够映射到同一URL地址吗](http://stackoverflow.com/questions/17196766/can-resteasy-choose-method-based-on-query-params)
 
 * Object对象作为http请求参数为json string格式。格式不正确会导致解析错误。下一版本考虑参数json格式可视化。
+[Stackoverflow:POST的方法能够接收多个参数吗？](http://stackoverflow.com/questions/5553218/jax-rs-post-multiple-objects)
 
-* swagger注解既可以写在接口上，也可以写在实现类上。     
+* swagger注解既可以写在接口上，也可以写在实现类上。 
+* 原生类型作为http请求参数为必填。
+
+
+
  
 
 
