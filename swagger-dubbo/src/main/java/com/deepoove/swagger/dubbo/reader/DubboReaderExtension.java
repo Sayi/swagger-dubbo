@@ -422,21 +422,10 @@ public class DubboReaderExtension implements ReaderExtension {
 	@Override
 	public void applyParameters(ReaderContext context, Operation operation, Type type,
 			Annotation[] annotations) {
-		// if (annotations != null) {
-		// for (Annotation annotation : annotations) {
-		// if (annotation instanceof ApiParam) {
-		// final Parameter parameter = readParam(context.getSwagger(), type,
-		// (ApiParam) annotation);
-		// if (parameter != null) {
-		// operation.parameter(parameter);
-		// }
-		// }
-		// }
-		// }
 	}
 
 	private void applyParametersV2(ReaderContext context, Operation operation, String name,
-			Type type, Annotation[] annotations, Annotation[] interfaceParamAnnotations) {
+			Type type,Class<?> cls, Annotation[] annotations, Annotation[] interfaceParamAnnotations) {
 		Annotation apiParam = null;
 		if (annotations != null) {
 			for (Annotation annotation : interfaceParamAnnotations) {
@@ -454,7 +443,7 @@ public class DubboReaderExtension implements ReaderExtension {
 				}
 			}
 		}
-		final Parameter parameter = readParam(context.getSwagger(), type,
+		final Parameter parameter = readParam(context.getSwagger(), type,cls,
 				null == apiParam ? null : (ApiParam) apiParam);
 		if (parameter != null) {
 			parameter.setName(null == name ? parameter.getName() : name);
@@ -462,7 +451,7 @@ public class DubboReaderExtension implements ReaderExtension {
 		}
 	}
 
-	private Parameter readParam(Swagger swagger, Type type, ApiParam param) {
+	private Parameter readParam(Swagger swagger, Type type,Class<?> cls, ApiParam param) {
 		PrimitiveType fromType = PrimitiveType.fromType(type);
 		final Parameter para = null == fromType ? new FormParameter() : new QueryParameter();
 		Parameter parameter = ParameterProcessor.applyAnnotations(swagger, para,
@@ -470,9 +459,8 @@ public class DubboReaderExtension implements ReaderExtension {
 						: Collections.<Annotation> singletonList(param));
 		if (parameter instanceof AbstractSerializableParameter) {
 			final AbstractSerializableParameter<?> p = (AbstractSerializableParameter<?>) parameter;
-			if (p.getType() == null)
-				p.setType(null == fromType ? "string" : fromType.getCommonName());
-			// if (p.getName() == null) p.setName(type.getTypeName());
+			if (p.getType() == null) p.setType(null == fromType ? "string" : fromType.getCommonName());
+			p.setRequired(p.getRequired() == true ? true : cls.isPrimitive());
 		}
 		return parameter;
 	}
@@ -483,11 +471,12 @@ public class DubboReaderExtension implements ReaderExtension {
 		try {
 			String[] parameterNames = parameterNameDiscover.getParameterNames(method);
 			Type[] genericParameterTypes = method.getGenericParameterTypes();
+			Class<?>[] parameterTypes = method.getParameterTypes();
 			Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 			Annotation[][] interfaceParamAnnotations = interfaceMethod.getParameterAnnotations();
 			for (int i = 0; i < genericParameterTypes.length; i++) {
 				applyParametersV2(context, operation,
-						null == parameterNames ? null : parameterNames[i], genericParameterTypes[i],
+						null == parameterNames ? null : parameterNames[i], genericParameterTypes[i],parameterTypes[i],
 						parameterAnnotations[i], interfaceParamAnnotations[i]);
 			}
 		} catch (SecurityException e) {

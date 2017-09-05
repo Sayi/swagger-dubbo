@@ -44,4 +44,9 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(String id) {}
 
+	@Override
+	public int compare(User src, User dest) {
+		return 0;
+	}
+
 }

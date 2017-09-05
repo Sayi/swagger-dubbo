@@ -9,7 +9,7 @@
 
 	<groupId>com.deepoove</groupId>
 	<artifactId>swagger-dubbo-project</artifactId>
-	<version>1.0.2-alpha</version>
+	<version>1.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>swagger-dubbo-project</name>

@@ -26,5 +26,8 @@ public interface UserService {
 
 	@ApiOperation(value = "删除用户", notes = "保存用户信息")
 	void delete(@ApiParam(value = "用户id") String id);
+	
+	@ApiOperation(value = "比较用户")
+	int compare(User src, User dest);
 
 }
