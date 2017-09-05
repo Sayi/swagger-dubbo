@@ -8,8 +8,8 @@
 
 	<dubbo:application name="dubbo-example-app" />
 
-	<dubbo:registry address="zookeeper://115.29.10.121:7181"
-		client="curator" username="sayi" password="123456" />
+	<dubbo:registry address="zookeeper://127.0.0.1:7181"
+		client="curator" />
 
 
 	<dubbo:protocol name="dubbo" port="20880" />
