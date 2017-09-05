@@ -39,7 +39,7 @@ public class SwaggerDubboConfig {
 }
 
 ```
-在spring xml配置中，打开Configuration注解，申明SwaggerDubboConfig。
+在spring xml配置中，打开Configuration注解，声明SwaggerDubboConfig。
 ```xml
 <context:annotation-config />
 <bean class="com.deepoove.swagger.dubbo.example.SwaggerDubboConfig" />
@@ -47,7 +47,8 @@ public class SwaggerDubboConfig {
 
 3. 配置swagger-dubbo
 
-新增property文件swagger-dubbo.properties：
+新增property文件swagger-dubbo.properties
+
 在spring xml配置中，加载配置文件。
 
 ```xml
