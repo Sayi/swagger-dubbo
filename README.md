@@ -81,9 +81,9 @@ swagger.dubbo.application.artifactId = dubbo.api
 如何集成swagger-ui，参见官方文档 [GitHub Swagger UI](https://github.com/swagger-api/swagger-ui)
 
 ## swagger-dubbo集成注意事项
-* 对于服务接口方法重载，为了在http请求中唯一确认一个方法，需要使用注解`@ApiOperation(nickname = "byArea")`,通过nickname标记唯一路径。此时，rest的请求地址为：`http://ip:port/h/com.XXX.XxService/method/byArea`
+* 对于服务接口方法重载，为了在http请求中唯一确认一个方法，需要使用注解`@ApiOperation(nickname = "byArea")`,通过nickname标记唯一路径(如果不填写，将只显示一个方法)。此时，rest的请求地址为：`http://ip:port/h/com.XXX.XxService/method/byArea`
 
-* 原生类型作为http请求参数需要指定值，下一版本考虑对于原生类型参数，改为必填。
+* 原生类型作为http请求参数为必填。
 
 * Object对象作为http请求参数为json string格式。格式不正确会导致解析错误。下一版本考虑参数json格式可视化。
 
