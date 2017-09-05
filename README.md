@@ -19,7 +19,7 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
-  <version>1.0.2-alpha</version>
+  <version>1.0.3-alpha</version>
 </dependency>
 ```
 
