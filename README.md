@@ -2,13 +2,19 @@
 
 [![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo)
 
-Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，致力于提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。  
+Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。  
 Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest api的开源工具。
 
 
 **Swagger-dubbo致力于dubbo与swagger文档的集成，并且为dubbo提供rest风格的http调用方案。适用于dubbo服务接口调试、接口http请求模拟、单机验证等场景。**
 
 ![Swagger-UI](swagger-dubbo-example/swagger_ui.png)
+
+## 近期规划 2018-01-10
+* RPC注册中心调用和本地调用配置 [issue #3](https://github.com/Sayi/swagger-dubbo/issues/3)
+* 由于官方开始重点维护dubbo，swagger-dubbo将基于dubbo2.6.0+重新开发，预期版本号从1.5.0开始，dubbo2.5.3不再增加新特性
+* 完善发现dubbo服务的能力(如基于注解的配置) [issue #2](https://github.com/Sayi/swagger-dubbo/issues/2)
+* swagger-dubbo支持dubbox
 
 ## 快速集成
 所有集成都是基于spring配置。swagger v2.0、dubbo2.5.3+。
