@@ -1,7 +1,6 @@
 package com.deepoove.swagger.dubbo.config;
 
 import java.text.MessageFormat;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
 
@@ -11,7 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
-import com.alibaba.dubbo.config.spring.ServiceBean;
+import com.deepoove.swagger.dubbo.http.ReferenceManager;
 
 import io.swagger.config.SwaggerConfig;
 import io.swagger.models.Contact;
@@ -37,15 +36,10 @@ public class DubboPropertyConfig implements SwaggerConfig {
 										+ "&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;{2}&lt;/version&gt;<br/>" 
 										+ "&lt;/dependency&gt;<br/>";
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public Swagger configure(Swagger swagger) {
-		Map<?, ServiceBean> serviceBeans = ServiceBean.getSpringContext().getBeansOfType(ServiceBean.class);
-		ApplicationConfig application = null;
-		if (serviceBeans.values().size() > 0) {
-			ServiceBean<?> bean = serviceBeans.values().toArray(new ServiceBean[]{})[0];
-			application = bean.getApplication();
-
+	    ApplicationConfig application = ReferenceManager.getInstance().getApplication();
+		if (null != application) {
 			Info info = swagger.getInfo();
 			if (info == null) {
 				info = new Info();

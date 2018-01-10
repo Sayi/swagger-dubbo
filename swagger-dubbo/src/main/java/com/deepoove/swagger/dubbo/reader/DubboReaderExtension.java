@@ -14,10 +14,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
-import org.springframework.core.ParameterNameDiscoverer;
-import org.springframework.core.PrioritizedParameterNameDiscoverer;
-import org.springframework.core.StandardReflectionParameterNameDiscoverer;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
@@ -56,16 +52,6 @@ import io.swagger.util.PrimitiveType;
 import io.swagger.util.ReflectionUtils;
 
 public class DubboReaderExtension implements ReaderExtension {
-
-	public static final ParameterNameDiscoverer parameterNameDiscover;
-
-	static {
-		parameterNameDiscover = new PrioritizedParameterNameDiscoverer();
-		((PrioritizedParameterNameDiscoverer) parameterNameDiscover)
-				.addDiscoverer(new LocalVariableTableParameterNameDiscoverer());
-		((PrioritizedParameterNameDiscoverer) parameterNameDiscover)
-				.addDiscoverer(new StandardReflectionParameterNameDiscoverer());
-	}
 
 	@Override
 	public int getPriority() {
@@ -469,7 +455,7 @@ public class DubboReaderExtension implements ReaderExtension {
 	public void applyParameters(ReaderContext context, Operation operation, Method method,
 			Method interfaceMethod) {
 		try {
-			String[] parameterNames = parameterNameDiscover.getParameterNames(method);
+			String[] parameterNames = NameDiscover.parameterNameDiscover.getParameterNames(method);
 			Type[] genericParameterTypes = method.getGenericParameterTypes();
 			Class<?>[] parameterTypes = method.getParameterTypes();
 			Annotation[][] parameterAnnotations = method.getParameterAnnotations();

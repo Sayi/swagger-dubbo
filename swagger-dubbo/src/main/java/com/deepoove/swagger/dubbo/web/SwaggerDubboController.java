@@ -36,8 +36,6 @@ public class SwaggerDubboController {
 
 	@Value("${swagger.dubbo.http:h}")
 	private String httpContext;
-	@Value("${swagger.dubbo.annotation.class:true}")
-	private boolean classAnotation = true;
 	@Value("${swagger.dubbo.enable:true}")
 	private boolean enable = true;
 

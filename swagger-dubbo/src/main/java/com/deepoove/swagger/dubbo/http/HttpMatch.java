@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.deepoove.swagger.dubbo.reader.DubboReaderExtension;
+import com.deepoove.swagger.dubbo.reader.NameDiscover;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.models.HttpMethod;
@@ -83,7 +83,7 @@ public class HttpMatch {
 
 		List<RateMethod> rateMethods = new ArrayList<RateMethod>();
 		for (Method method : refMethods) {
-			String[] parameterNames = DubboReaderExtension.parameterNameDiscover
+			String[] parameterNames = NameDiscover.parameterNameDiscover
 					.getParameterNames(method);
 			if (parameterNames == null) return method;
 			float correctRate = 0.0f;
