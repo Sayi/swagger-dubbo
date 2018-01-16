@@ -10,6 +10,11 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 
 ![Swagger-UI](swagger-dubbo-example/swagger_ui.png)
 
+## 近期规划 2018-01-10
+RPC注册中心调用和本地调用配置 issue #3
+由于官方开始重点维护dubbo，swagger-dubbo将基于dubbo2.6.0+重新开发，预期版本号从1.5.0开始，dubbo2.5.3不再增加新特性
+完善发现dubbo服务的能力(如基于注解的配置) issue #2
+swagger-dubbo支持dubbox
 
 ## 快速集成
 所有集成都是基于spring配置。swagger v2.0、**dubbo2.5.3**(swagger-dubbo 1.1.0版本仅支持dubbo2.5.3)。
