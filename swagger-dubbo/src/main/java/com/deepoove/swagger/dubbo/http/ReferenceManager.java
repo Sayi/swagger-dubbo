@@ -12,7 +12,8 @@ import com.alibaba.dubbo.config.spring.ServiceBean;
 
 public class ReferenceManager {
 
-    private static Collection<ServiceBean<?>> services;
+    @SuppressWarnings("rawtypes")
+    private static Collection<ServiceBean> services;
 
     private static Map<Class<?>, Object> interfaceMapProxy = new ConcurrentHashMap<Class<?>, Object>();
     private static Map<Class<?>, Object> interfaceMapRef = new ConcurrentHashMap<Class<?>, Object>();
@@ -22,11 +23,11 @@ public class ReferenceManager {
 
     private ReferenceManager() {}
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings("rawtypes")
     public synchronized static ReferenceManager getInstance() {
         if (null != instance) return instance;
         instance = new ReferenceManager();
-        Map<?, ServiceBean<?>> beansOfType = ServiceBean.getSpringContext()
+        Map<String, ServiceBean> beansOfType = ServiceBean.getSpringContext()
                 .getBeansOfType(ServiceBean.class);
         services = beansOfType.values();
         for (ServiceBean<?> bean : services) {
@@ -64,7 +65,8 @@ public class ReferenceManager {
         return null;
     }
 
-    public Collection<ServiceBean<?>> getServices() {
+    @SuppressWarnings("rawtypes")
+    public Collection<ServiceBean> getServices() {
         return services;
     }
 
