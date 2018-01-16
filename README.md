@@ -6,18 +6,13 @@ Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，提供高性能和�
 Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest api的开源工具。
 
 
-**Swagger-dubbo致力于dubbo与swagger文档的集成，并且为dubbo提供rest风格的http调用方案。适用于dubbo服务接口调试、接口http请求模拟、单机验证等场景。**
+**Swagger-dubbo致力于dubbo与swagger文档的集成，并且为dubbo提供rest风格的http调用方案。适用于dubbo服务接口调试、接口http请求模拟、服务验证等场景。**
 
 ![Swagger-UI](swagger-dubbo-example/swagger_ui.png)
 
-## 近期规划 2018-01-10
-* RPC注册中心调用和本地调用配置 [issue #3](https://github.com/Sayi/swagger-dubbo/issues/3)
-* 由于官方开始重点维护dubbo，swagger-dubbo将基于dubbo2.6.0+重新开发，预期版本号从1.5.0开始，dubbo2.5.3不再增加新特性
-* 完善发现dubbo服务的能力(如基于注解的配置) [issue #2](https://github.com/Sayi/swagger-dubbo/issues/2)
-* swagger-dubbo支持dubbox
 
 ## 快速集成
-所有集成都是基于spring配置。swagger v2.0、dubbo2.5.3+。
+所有集成都是基于spring配置。swagger v2.0、**dubbo2.5.3**(swagger-dubbo 1.1.0版本仅支持dubbo2.5.3)。
 
 1. Maven依赖
 
@@ -25,7 +20,7 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
-  <version>1.0.3-alpha</version>
+  <version>1.1.0</version>
 </dependency>
 ```
 
@@ -75,6 +70,9 @@ swagger.dubbo.application.groupId = com.deepoove
 #dubbo服务artifactId
 swagger.dubbo.application.artifactId = dubbo.api
 
+#rpc调用 or local调用
+#swagger.dubbo.cluster = rpc
+
 #是否启用swagger-dubbo，默认为true
 #swagger.dubbo.enable = true
 ```
@@ -83,7 +81,7 @@ swagger.dubbo.application.artifactId = dubbo.api
 
 
 ## 示例与集成swagger-ui
-示例参见swagger-dubbo-example。  
+示例参见swagger-dubbo-example(启动前需要修改/dubbo-provider/src/main/resources/application/remote-provider.xml文件中Zookeeper的配置)。  
 
 如何集成swagger-ui，参见官方文档 [GitHub Swagger UI](https://github.com/swagger-api/swagger-ui)
 
