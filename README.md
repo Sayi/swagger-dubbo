@@ -6,18 +6,17 @@ Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，提供高性能和�
 Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest api的开源工具。
 
 
-**Swagger-dubbo致力于dubbo与swagger文档的集成，并且为dubbo提供rest风格的http调用方案。适用于dubbo服务接口调试、接口http请求模拟、服务验证等场景。**
+**Swagger-dubbo致力于dubbo与swagger文档的集成，并且为dubbo提供rest风格的http调用方案**。
 
 ![Swagger-UI](swagger-dubbo-example/swagger_ui.png)
 
-## 近期规划 2018-01-10
-* RPC注册中心调用和本地调用配置 issue #3
-* 由于官方开始重点维护dubbo，swagger-dubbo将基于dubbo2.6.0+重新开发，预期版本号从1.5.0开始，dubbo2.5.3不再增加新特性
-* 完善发现dubbo服务的能力(如基于注解的配置) issue #2
-* swagger-dubbo支持dubbox
+## 版本
+| swagger-dubbo版本 | 支持dubbo版本号 | 支持dubbo注解 | 支持dubboX | SpringMVC demo | SpringBoot demo
+| --- | --- | --- | --- | --- | --- |
+| 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | 否 | :white_check_mark: 有 | 无
+| 2.0.0-SNAPSHOT(开发中，尚未发布) | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 是 | :white_check_mark: 有 | :white_check_mark: 有
 
 ## 快速集成
-所有集成都是基于spring配置。swagger v2.0、**dubbo2.5.3**(swagger-dubbo 1.1.0版本仅支持dubbo2.5.3)。
 
 1. Maven依赖
 
@@ -25,7 +24,7 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
-  <version>1.1.0</version>
+  <version>2.0.0-SNAPSHOT(开发中，尚未发布)</version>
 </dependency>
 ```
 
@@ -43,9 +42,10 @@ import com.deepoove.swagger.dubbo.annotations.EnableDubboSwagger;
 public class SwaggerDubboConfig {
 
 }
-
 ```
+
 在spring xml配置中，打开Configuration注解，声明SwaggerDubboConfig。
+
 ```xml
 <context:annotation-config />
 <bean class="com.deepoove.swagger.dubbo.example.SwaggerDubboConfig" />
@@ -103,6 +103,3 @@ swagger.dubbo.application.artifactId = dubbo.api
 ### [文章：探讨Dubbo与Swagger的集成](https://github.com/Sayi/sayi.github.com/issues/15)
 
  
-
-
-
