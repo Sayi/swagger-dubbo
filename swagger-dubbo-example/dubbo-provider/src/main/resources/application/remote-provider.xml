@@ -6,9 +6,9 @@
         http://code.alibabatech.com/schema/dubbo
         http://souche.oss-cn-hangzhou.aliyuncs.com/files/dubbo/dubbo.xsd">
 
-	<dubbo:application name="dubbo-example-app" />
+	<dubbo:application name="dubbo-example-app" owner="Sayi" />
 
-	<dubbo:registry address="zookeeper://127.0.0.1:7181"
+	<dubbo:registry address="zookeeper://127.0.0.1:2181"
 		client="curator"/>
 
 

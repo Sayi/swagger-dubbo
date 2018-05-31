@@ -51,6 +51,13 @@ public class ReferenceManager {
         for (ServiceBean<?> bean : services) {
             interfaceMapRef.putIfAbsent(bean.getInterfaceClass(), bean.getRef());
         }
+        
+        //
+        if (!services.isEmpty()) {
+			ServiceBean<?> bean = services.toArray(new ServiceBean[]{})[0];
+			application = bean.getApplication();
+        }
+        
         return instance;
     }
 
