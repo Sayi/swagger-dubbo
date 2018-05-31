@@ -17,7 +17,8 @@
 	<context:component-scan base-package="com.deepoove.swagger.dubbo.example" />
 	<context:property-placeholder location="classpath*:swagger-dubbo.properties" />
 
-	<bean class="com.deepoove.swagger.dubbo.example.SwaggerDubboConfig" />
+	<!-- <bean class="com.deepoove.swagger.dubbo.example.SwaggerDubboConfig" />
+	<bean class="com.deepoove.swagger.dubbo.example.AnnotationScanConfig" /> -->
 
 	<mvc:resources location="/dist/" mapping="/dist/**" />
 	<mvc:resources location="/distv2/" mapping="/distv2/**" />
