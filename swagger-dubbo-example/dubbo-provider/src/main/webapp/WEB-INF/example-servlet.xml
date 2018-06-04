@@ -13,6 +13,7 @@
         http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<mvc:annotation-driven>
+		<!-- 支持fastjson -->
 		<!-- <mvc:message-converters>
 			<bean
 				class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
@@ -26,17 +27,19 @@
 	</mvc:annotation-driven>
 	<context:annotation-config />
 	<context:component-scan base-package="com.deepoove.swagger.dubbo.example" />
-	<context:property-placeholder location="classpath*:swagger-dubbo.properties" />
+	<context:property-placeholder />
+	
+	<!-- <context:property-placeholder location="classpath*:swagger-dubbo.properties" /> -->
 
-	<!-- <bean class="com.deepoove.swagger.dubbo.example.SwaggerDubboConfig" 
-		/> <bean class="com.deepoove.swagger.dubbo.example.AnnotationScanConfig" 
-		/> -->
+	<bean class="com.deepoove.swagger.dubbo.example.SwaggerDubboConfig" />
+	<bean class="com.deepoove.swagger.dubbo.example.AnnotationScanConfig" />
 
 	<mvc:resources location="/dist/" mapping="/dist/**" />
 	<mvc:resources location="/distv2/" mapping="/distv2/**" />
 
-
-
-
+    <!-- 跨域支持 -->
+	<mvc:cors>
+		<mvc:mapping path="/swagger-dubbo/**" allowed-origins="*" />
+	</mvc:cors>
 
 </beans>
