@@ -83,6 +83,26 @@ swagger.dubbo.application.artifactId = dubbo.api
 ```
 
 4. 启动web容器，浏览器访问 `http://ip:port/context/swagger-dubbo/api-docs`
+```
+
+
+5. 修改编译参数。增加-parameters。如果使用maven参数，请增加如下插件或补充
+
+```
+<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<compilerArgument>-parameters</compilerArgument>
+				</configuration>
+			</plugin>
+```
+
+6. 返回对象如果使用了泛型。则目前版本需要在接口实现处增加注解
+
+```  @ApiOperation(value="xxx",response=YourClass.class) ```
 
 
 ## 示例与集成swagger-ui
