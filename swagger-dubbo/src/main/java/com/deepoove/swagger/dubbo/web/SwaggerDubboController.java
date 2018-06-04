@@ -20,13 +20,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.annotations.Api;
 import io.swagger.config.SwaggerConfig;
 import io.swagger.models.Swagger;
-import io.swagger.util.Json;
+import springfox.documentation.spring.web.json.Json;
 
 @Controller
 @RequestMapping("${swagger.dubbo.doc:swagger-dubbo}")
 @Api(hidden = true)
 public class SwaggerDubboController {
 
+    public static final String DEFAULT_URL = "/api-docs";
+    private static final String HAL_MEDIA_TYPE = "application/hal+json";
+    
 	@Autowired
 	private DubboServiceScanner dubboServiceScanner;
 	@Autowired
@@ -39,17 +42,19 @@ public class SwaggerDubboController {
 	@Value("${swagger.dubbo.enable:true}")
 	private boolean enable = true;
 
-	@RequestMapping(value = "/swagger.json", method = RequestMethod.GET, produces = "application/json; charset=utf-8")
+	@RequestMapping(value = DEFAULT_URL, 
+	        method = RequestMethod.GET, 
+	        produces = {"application/json; charset=utf-8", HAL_MEDIA_TYPE})
 	@ResponseBody
-	public ResponseEntity<String> getApiList() throws JsonProcessingException {
+	public ResponseEntity<Json> getApiList() throws JsonProcessingException {
 		
 		if (!enable){
-			return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Json>(HttpStatus.NOT_FOUND);
 		}
 		
 		Swagger swagger = swaggerDocCache.getSwagger();
 		if (null != swagger){
-			return new ResponseEntity<String>(Json.mapper().writeValueAsString(swagger), HttpStatus.OK);
+			return new ResponseEntity<Json>(new Json(io.swagger.util.Json.mapper().writeValueAsString(swagger)), HttpStatus.OK);
 		}else{
 			swagger = new Swagger();
 		}
@@ -64,7 +69,7 @@ public class SwaggerDubboController {
 			Reader.read(swagger, interfaceMapRef, httpContext);
 		}
 		swaggerDocCache.setSwagger(swagger);
-		return new ResponseEntity<String>(Json.mapper().writeValueAsString(swagger), HttpStatus.OK);
+		return new ResponseEntity<Json>(new Json(io.swagger.util.Json.mapper().writeValueAsString(swagger)), HttpStatus.OK);
 	}
 
 }

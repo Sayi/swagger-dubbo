@@ -82,7 +82,7 @@ swagger.dubbo.application.artifactId = dubbo.api
 #swagger.dubbo.enable = true
 ```
 
-4. 启动web容器，浏览器访问 `http://ip:port/context/swagger-dubbo/swagger.json`
+4. 启动web容器，浏览器访问 `http://ip:port/context/swagger-dubbo/api-docs`
 
 
 ## 示例与集成swagger-ui
