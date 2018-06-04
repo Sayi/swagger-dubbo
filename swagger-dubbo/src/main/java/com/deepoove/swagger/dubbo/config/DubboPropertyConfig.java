@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.ServletContextAware;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.deepoove.swagger.dubbo.http.ReferenceManager;
@@ -18,7 +19,7 @@ import io.swagger.models.Info;
 import io.swagger.models.Swagger;
 
 @Component
-public class DubboPropertyConfig implements SwaggerConfig {
+public class DubboPropertyConfig implements SwaggerConfig, ServletContextAware {
 
 	@Value("${swagger.dubbo.application.version}")
 	private String version;
@@ -72,6 +73,11 @@ public class DubboPropertyConfig implements SwaggerConfig {
 	@Override
 	public String getFilterClass() {
 		return null;
+	}
+
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
 	}
 
 }

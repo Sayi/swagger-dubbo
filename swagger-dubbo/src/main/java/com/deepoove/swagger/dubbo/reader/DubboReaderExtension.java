@@ -14,7 +14,9 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 
+import com.deepoove.swagger.dubbo.parameter.JsonFormPatameter;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.google.common.base.Function;
@@ -38,6 +40,7 @@ import io.swagger.models.Response;
 import io.swagger.models.Scheme;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.AbstractSerializableParameter;
+import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.QueryParameter;
@@ -410,8 +413,8 @@ public class DubboReaderExtension implements ReaderExtension {
 			Annotation[] annotations) {
 	}
 
-	private void applyParametersV2(ReaderContext context, Operation operation, String name,
-			Type type,Class<?> cls, Annotation[] annotations, Annotation[] interfaceParamAnnotations) {
+	private void applyParametersV2(ReaderContext context, Operation operation, String name, Type type, Class<?> cls, Annotation[] annotations,
+			Annotation[] interfaceParamAnnotations, Annotation[] overridenParamAnnotations) {
 		Annotation apiParam = null;
 		if (annotations != null) {
 			for (Annotation annotation : interfaceParamAnnotations) {
@@ -428,6 +431,14 @@ public class DubboReaderExtension implements ReaderExtension {
 					}
 				}
 			}
+			if (null == apiParam) {
+				for (Annotation annotation : overridenParamAnnotations) {
+					if (annotation instanceof ApiParam) {
+						apiParam = annotation;
+						break;
+					}
+				}
+			}
 		}
 		final Parameter parameter = readParam(context.getSwagger(), type,cls,
 				null == apiParam ? null : (ApiParam) apiParam);
@@ -435,35 +446,44 @@ public class DubboReaderExtension implements ReaderExtension {
 			parameter.setName(null == name ? parameter.getName() : name);
 			operation.parameter(parameter);
 		}
+		appendModels(context.getSwagger(), type);
 	}
 
 	private Parameter readParam(Swagger swagger, Type type,Class<?> cls, ApiParam param) {
 		PrimitiveType fromType = PrimitiveType.fromType(type);
-		final Parameter para = null == fromType ? new FormParameter() : new QueryParameter();
-		Parameter parameter = ParameterProcessor.applyAnnotations(swagger, para,
-				type == null ? String.class : type, null == param ? new ArrayList<Annotation>()
-						: Collections.<Annotation> singletonList(param));
+		final Parameter para = null == fromType ? new BodyParameter() : new QueryParameter();
+		JsonFormPatameter jsonFormPatameter = new JsonFormPatameter();
+		
+		Parameter parameter = ParameterProcessor.applyAnnotations(swagger, para, type == null ? String.class : type,
+				null == param ? new ArrayList<Annotation>() : Collections.<Annotation> singletonList(param));
 		if (parameter instanceof AbstractSerializableParameter) {
 			final AbstractSerializableParameter<?> p = (AbstractSerializableParameter<?>) parameter;
-			if (p.getType() == null) p.setType(null == fromType ? "string" : fromType.getCommonName());
+			if (p.getType() == null)  
+				p.setType(null == fromType ? "string" : fromType.getCommonName());
 			p.setRequired(p.getRequired() == true ? true : cls.isPrimitive());
 		}
-		return parameter;
+		BeanUtils.copyProperties(parameter, jsonFormPatameter);
+		//将复杂类型的参数强制在url参数中使用
+		jsonFormPatameter.setIn("query");
+		return jsonFormPatameter; 
 	}
 
 	@Override
 	public void applyParameters(ReaderContext context, Operation operation, Method method,
 			Method interfaceMethod) {
 		try {
-			String[] parameterNames = NameDiscover.parameterNameDiscover.getParameterNames(method);
-			Type[] genericParameterTypes = method.getGenericParameterTypes();
-			Class<?>[] parameterTypes = method.getParameterTypes();
+			Method overridenMethod = ReflectionUtils.getOverriddenMethod(method);
+			String[] parameterNames = NameDiscover.parameterNameDiscover.getParameterNames(interfaceMethod);
+			Type[] genericParameterTypes = interfaceMethod.getGenericParameterTypes();
+			Class<?>[] parameterTypes = interfaceMethod.getParameterTypes();
 			Annotation[][] parameterAnnotations = method.getParameterAnnotations();
 			Annotation[][] interfaceParamAnnotations = interfaceMethod.getParameterAnnotations();
+			Annotation[][] overridenParamAnnotations = overridenMethod.getParameterAnnotations();
+
 			for (int i = 0; i < genericParameterTypes.length; i++) {
-				applyParametersV2(context, operation,
-						null == parameterNames ? null : parameterNames[i], genericParameterTypes[i],parameterTypes[i],
-						parameterAnnotations[i], interfaceParamAnnotations[i]);
+				applyParametersV2(context, operation, null == parameterNames ? null : parameterNames[i], genericParameterTypes[i], parameterTypes[i],
+						parameterAnnotations[i], interfaceParamAnnotations[i], overridenParamAnnotations[i]);
+
 			}
 		} catch (SecurityException e) {
 			e.printStackTrace();
@@ -473,19 +493,28 @@ public class DubboReaderExtension implements ReaderExtension {
 
 	@Override
 	public void applyImplicitParameters(ReaderContext context, Operation operation, Method method) {
-		final ApiImplicitParams implicitParams = method.getAnnotation(ApiImplicitParams.class);
+//		final ApiImplicitParams implicitParams = method.getAnnotation(ApiImplicitParams.class);
+		final ApiImplicitParams implicitParams = ReflectionUtils.getAnnotation(method, ApiImplicitParams.class);
 		if (implicitParams != null && implicitParams.value().length > 0) {
 			for (ApiImplicitParam param : implicitParams.value()) {
-				final Parameter p = readImplicitParam(context.getSwagger(), param);
-				if (p != null) {
-					operation.parameter(p);
+				for(int i =0 ;i < operation.getParameters().size();i++ ) {
+					final Parameter p = readImplicitParam(context.getSwagger(), param);
+					Parameter existsParameter = operation.getParameters().get(i);
+					if(p != null) {
+						if (existsParameter.getName().equals(p.getName())) {
+							operation.getParameters().set(i, p);
+						}else {
+							operation.parameter(p);
+						}
+					}
+					
 				}
 			}
 		}
 	}
 
 	private Parameter readImplicitParam(Swagger swagger, ApiImplicitParam param) {
-		PrimitiveType fromType = PrimitiveType.fromName(param.paramType());
+		PrimitiveType fromType = PrimitiveType.fromName(param.dataType());
 		final Parameter p = null == fromType ? new FormParameter() : new QueryParameter();
 		final Type type = ReflectionUtils.typeFromString(param.dataType());
 		return ParameterProcessor.applyAnnotations(swagger, p, type == null ? String.class : type,

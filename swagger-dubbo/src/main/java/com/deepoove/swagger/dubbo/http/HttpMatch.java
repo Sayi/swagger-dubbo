@@ -22,43 +22,46 @@ public class HttpMatch {
 	private static Logger logger = LoggerFactory.getLogger(HttpMatch.class);
 
 	private Class<?> interfaceClass;
-	private Class<?> refClass;
+	// private Class<?> refClass;
 
-	public HttpMatch(Class<?> interfaceClass, Class<?> refClass) {
+	// public HttpMatch(Class<?> interfaceClass, Class<?> refClass) {
+	// this.interfaceClass = interfaceClass;
+	// this.refClass = refClass;
+	// }
+	public HttpMatch(Class<?> interfaceClass) {
 		this.interfaceClass = interfaceClass;
-		this.refClass = refClass;
 	}
 
 	public Method[] findInterfaceMethods(String methodName) {
 		Method[] methods = interfaceClass.getMethods();
 		List<Method> ret = new ArrayList<Method>();
 		for (Method method : methods) {
-			if (method.getName().equals(methodName)) ret.add(method);
+			if (method.getName().equals(methodName))
+				ret.add(method);
 		}
 		return ret.toArray(new Method[] {});
 	}
 
-	public Method[] findRefMethods(Method[] interfaceMethods, String operationId,
-			String requestMethod) {
+	public Method[] findRefMethods(Method[] interfaceMethods, String operationId, String requestMethod) {
 		List<Method> ret = new ArrayList<Method>();
 		for (Method method : interfaceMethods) {
 			Method m;
 			try {
-				m = refClass.getMethod(method.getName(), method.getParameterTypes());
-				final ApiOperation apiOperation = ReflectionUtils.getAnnotation(m,
-						ApiOperation.class);
+				m = interfaceClass.getMethod(method.getName(), method.getParameterTypes());
+				final ApiOperation apiOperation = ReflectionUtils.getAnnotation(m, ApiOperation.class);
 				String nickname = null == apiOperation ? null : apiOperation.nickname();
 				if (operationId != null) {
-					if (!operationId.equals(nickname)) continue;
+					if (!operationId.equals(nickname))
+						continue;
 				} else {
-					if (StringUtils.isNotBlank(nickname)) continue;
+					if (StringUtils.isNotBlank(nickname))
+						continue;
 				}
 				if (requestMethod != null) {
 					String httpMethod = null == apiOperation ? null : apiOperation.httpMethod();
 					if (StringUtils.isNotBlank(httpMethod) && !requestMethod.equals(httpMethod))
 						continue;
-					if (StringUtils.isBlank(httpMethod)
-							&& !requestMethod.equalsIgnoreCase(HttpMethod.POST.name()))
+					if (StringUtils.isBlank(httpMethod) && !requestMethod.equalsIgnoreCase(HttpMethod.POST.name()))
 						continue;
 				}
 				ret.add(m);
@@ -78,20 +81,26 @@ public class HttpMatch {
 	}
 
 	public Method matchRefMethod(Method[] refMethods, String methodName, Set<String> keySet) {
-		if (refMethods.length == 0) { return null; }
-		if (refMethods.length == 1) { return refMethods[0]; }
+		if (refMethods.length == 0) {
+			return null;
+		}
+		if (refMethods.length == 1) {
+			return refMethods[0];
+		}
 
 		List<RateMethod> rateMethods = new ArrayList<RateMethod>();
 		for (Method method : refMethods) {
-			String[] parameterNames = NameDiscover.parameterNameDiscover
-					.getParameterNames(method);
-			if (parameterNames == null) return method;
+			String[] parameterNames = NameDiscover.parameterNameDiscover.getParameterNames(method);
+			if (parameterNames == null)
+				return method;
 			float correctRate = 0.0f;
 			int hit = 0;
 			int error = 0;
 			for (String paramName : parameterNames) {
-				if (keySet.contains(paramName)) hit++;
-				else error++;
+				if (keySet.contains(paramName))
+					hit++;
+				else
+					error++;
 			}
 			correctRate = error / (float) hit;
 
@@ -99,7 +108,8 @@ public class HttpMatch {
 
 		}
 
-		if (rateMethods.isEmpty()) return null;
+		if (rateMethods.isEmpty())
+			return null;
 		Collections.sort(rateMethods, new Comparator<RateMethod>() {
 			@Override
 			public int compare(RateMethod o1, RateMethod o2) {
