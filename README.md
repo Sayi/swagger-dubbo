@@ -90,9 +90,8 @@ swagger.dubbo.enable = true
 ```
 
 ## 跨域支持
-在spring配置文件中，配置跨域。
 ```xml
-<!-- 跨域支持 -->
+  <!-- 跨域支持，Spring4.3.10+ -->
   <mvc:cors>
     <mvc:mapping path="/swagger-dubbo/**" allowed-origins="*" />
   </mvc:cors>
