@@ -71,7 +71,7 @@ public class DubboHttpController {
 		    return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 		ref = entry.getValue();
-		HttpMatch httpMatch = new HttpMatch(entry.getKey(), ref.getClass());
+		HttpMatch httpMatch = new HttpMatch(entry.getKey());
 		Method[] interfaceMethods = httpMatch.findInterfaceMethods(methodName);
 
 		if (null != interfaceMethods && interfaceMethods.length > 0) {
