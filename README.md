@@ -15,10 +15,10 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 
 
 ## 版本
-| swagger-dubbo版本 | 支持dubbo版本号 | 支持dubbo注解 | 支持dubboX | SpringMVC demo | SpringBoot demo
-| --- | --- | --- | --- | --- | --- |
-| 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | 否 | :white_check_mark: 有 | 无
-| 2.0.0-SNAPSHOT(开发中，尚未发布) | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 是 | :white_check_mark: 有 | :white_check_mark: 有
+| swagger-dubbo版本 | 支持dubbo版本号 | 支持dubbo注解  | SpringMVC demo | SpringBoot demo
+| --- | --- | --- | --- | --- |
+| 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | :white_check_mark: 有 | 无
+| 2.0.0-SNAPSHOT(开发中，尚未发布) | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider/README.md) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot/README.md)
 
 
 ## Maven
@@ -58,9 +58,11 @@ OK，集成完毕。启动web容器，浏览器访问 `http://ip:port/context/sw
 
 
 ## swagger-ui查看文档
-swagger-ui的原理是解析swagger的json数据,然后渲染成页面。我们可以在任何能托管页面的容器内集成swagger-ui，然后配置swagger-dubbo提供的`http://ip:port/context/swagger-dubbo/api-docs`地址即可。
+swagger-ui的原理是解析swagger的json数据渲染成页面。
 
-详情参见官方文档 [GitHub Swagger UI](https://github.com/swagger-api/swagger-ui)
+我们可以在任何能托管页面的容器内集成swagger-ui，然后配置swagger-dubbo提供的`http://ip:port/context/swagger-dubbo/api-docs`，可能需要跨域支持。
+
+详情参见swagger-ui官方文档 [Swagger UI](https://github.com/swagger-api/swagger-ui)
 
 ## 配置
 swagger-dubbo默认无需任何配置，但是也提供了一些可选项。
@@ -97,13 +99,8 @@ swagger.dubbo.enable = true
   </mvc:cors>
 ```
 
-## 示例
-示例参见swagger-dubbo-example(启动前需要修改/dubbo-provider/src/main/resources/application/remote-provider.xml文件中Zookeeper的配置)。
-* dubbo-provider启动后，swagger-dubbo暴露的json数据通过地址`http://127.0.0.1:8077/dubbo-provider/swagger-dubbo/api-docs`查看。
-* SwaggerUI 2.x页面：浏览器访问`http://127.0.0.1:8077/dubbo-provider/distv2`
-![Swagger-UI](swagger-dubbo-example/swagger_ui.png)
-* SwaggerUI 3.x页面：浏览器访问`http://127.0.0.1:8077/dubbo-provider/dist` 
-![Swagger-UI](swagger-dubbo-example/swagger_ui_3.png)
+## SpringBoot 集成 Swagger-dubbo
+SpringBoot集成swagger-dubbo只需要做一步就可以了：使用注解 `@EnableDubboSwagger`开启dubbo的swagger文档。
 
 ## swagger-dubbo集成注意事项
 * 对于服务接口方法重载，为了在http请求中唯一确认一个方法，需要使用注解`@ApiOperation(nickname = "byArea")`,通过nickname标记唯一路径(如果不填写，将只显示一个方法)。此时，rest的请求地址为：`http://ip:port/h/com.XXX.XxService/method/byArea`
