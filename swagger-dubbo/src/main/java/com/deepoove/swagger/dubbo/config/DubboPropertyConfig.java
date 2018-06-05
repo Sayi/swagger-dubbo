@@ -21,17 +21,17 @@ import io.swagger.models.Swagger;
 @Component
 public class DubboPropertyConfig implements SwaggerConfig, ServletContextAware {
 
-	@Value("${swagger.dubbo.application.version}")
+	@Value("${swagger.dubbo.application.version:}")
 	private String version;
-	@Value("${swagger.dubbo.application.groupId}")
+	@Value("${swagger.dubbo.application.groupId:}")
 	private String groupId;
-	@Value("${swagger.dubbo.application.artifactId}")
+	@Value("${swagger.dubbo.application.artifactId:}")
 	private String artifactId;
 	
 	@Autowired
     private ServletContext servletContext;
 
-	private static String dependencyHtml = "&lt;dependency&gt;<br/>" 
+	private static String mavenDependency = "&lt;dependency&gt;<br/>" 
 										+ "&nbsp;&nbsp;&nbsp;&nbsp;&lt;groupId&gt;{0}&lt;/groupId&gt;<br/>"
 										+ "&nbsp;&nbsp;&nbsp;&nbsp;&lt;artifactId&gt;{1}&lt;/artifactId&gt;<br/>" 
 										+ "&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;{2}&lt;/version&gt;<br/>" 
@@ -52,7 +52,7 @@ public class DubboPropertyConfig implements SwaggerConfig, ServletContextAware {
 			if (StringUtils.isNotBlank(groupId) 
 					&& StringUtils.isNotBlank(artifactId)
 					&& StringUtils.isNotBlank(version)){
-				info.setDescription(MessageFormat.format(dependencyHtml, groupId, artifactId, version));
+				info.setDescription(MessageFormat.format(mavenDependency, groupId, artifactId, version));
 			}
 			info.setVersion(StringUtils.isNotBlank(version) ? version : "");
 			
