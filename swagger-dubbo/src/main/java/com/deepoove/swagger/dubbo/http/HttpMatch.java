@@ -68,12 +68,6 @@ public class HttpMatch {
 				logger.error("SecurityException", e);
 			}
 		}
-		Collections.sort(ret, new Comparator<Method>() {
-			@Override
-			public int compare(Method o1, Method o2) {
-				return o2.getParameterCount() - o1.getParameterCount();
-			}
-		});
 		return ret.toArray(new Method[] {});
 	}
 
