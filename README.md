@@ -1,6 +1,6 @@
 ## swagger-dubbo
 
-[![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo)
+[![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo) ![jdk1.6+](https://img.shields.io/badge/jdk-1.6%2B-orange.svg)
 
 Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。  
 Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest api的开源工具。
@@ -11,14 +11,14 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 * 开发人员可以用它来自测服务接口，也可以用它来模拟别人的服务接口返回值
 * 测试可以用它来验证接口的正确性，基于HTTP进行接口测试
 
-**注意：rest服务不适合对外(前端)提供，务必在服务端或者测试内部使用**
+swagger-dubbo从某些方面提高了内部开发测试的效率，**注意的是，rest服务不适合对外(前端)提供，务必在服务端或者测试内部使用**
 
 
 ## 版本
 | swagger-dubbo版本 | 支持dubbo版本号 | 支持dubbo注解  | SpringMVC demo | SpringBoot demo
 | --- | --- | --- | --- | --- |
 | 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | :white_check_mark: 有 | 无
-| 2.0.0-SNAPSHOT(开发中，尚未发布) | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)
+| 2.0.0-SNAPSHOT | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)
 
 
 ## Maven
@@ -26,7 +26,7 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
-  <version>2.0.0-SNAPSHOT(开发中，尚未发布)</version>
+  <version>2.0.0-SNAPSHOT</version>
 </dependency>
 ```
 
