@@ -28,6 +28,6 @@ public interface UserService {
 	void delete(@ApiParam(value = "用户id") String id);
 	
 	@ApiOperation(value = "比较用户")
-	int compare(User src, User dest);
+	int compare(@ApiParam(value = "用户id", required=true) User src, User dest);
 
 }

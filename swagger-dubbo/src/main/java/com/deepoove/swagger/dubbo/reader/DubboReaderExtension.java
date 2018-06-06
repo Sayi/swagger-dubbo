@@ -38,6 +38,7 @@ import io.swagger.models.Response;
 import io.swagger.models.Scheme;
 import io.swagger.models.Swagger;
 import io.swagger.models.parameters.AbstractSerializableParameter;
+import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.QueryParameter;
@@ -439,7 +440,7 @@ public class DubboReaderExtension implements ReaderExtension {
 
 	private Parameter readParam(Swagger swagger, Type type,Class<?> cls, ApiParam param) {
 		PrimitiveType fromType = PrimitiveType.fromType(type);
-		final Parameter para = null == fromType ? new FormParameter() : new QueryParameter();
+		final Parameter para = null == fromType ? new BodyParameter() : new QueryParameter();
 		Parameter parameter = ParameterProcessor.applyAnnotations(swagger, para,
 				type == null ? String.class : type, null == param ? new ArrayList<Annotation>()
 						: Collections.<Annotation> singletonList(param));
@@ -447,6 +448,10 @@ public class DubboReaderExtension implements ReaderExtension {
 			final AbstractSerializableParameter<?> p = (AbstractSerializableParameter<?>) parameter;
 			if (p.getType() == null) p.setType(null == fromType ? "string" : fromType.getCommonName());
 			p.setRequired(p.getRequired() == true ? true : cls.isPrimitive());
+		}else{
+		    //hack: Get the from data model paramter from BodyParameter
+		    BodyParameter bp = (BodyParameter)parameter;
+		    bp.setIn("formData");
 		}
 		return parameter;
 	}
