@@ -1,6 +1,6 @@
 ## swagger-dubbo
 
-[![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo) ![jdk1.6+](https://img.shields.io/badge/jdk-1.6%2B-orange.svg)
+[![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo) ![jdk1.6+](https://img.shields.io/badge/jdk-1.6%2B-orange.svg) ![dubbo2.6.0+](https://img.shields.io/badge/dubbo-2.6.0%2B-blue.svg)
 
 Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，提供高性能和透明化的RPC远程服务调用方案，以及SOA服务治理方案。  
 Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest api的开源工具。
@@ -14,25 +14,28 @@ Swagger围绕着OpenAPI规范，提供了一套设计、构建、文档化rest a
 swagger-dubbo从某些方面提高了内部开发测试的效率，**注意的是，rest服务不适合对外(前端)提供，务必在服务端或者测试内部使用**
 
 
-## 版本
+## 版本和计划
 | swagger-dubbo版本 | 支持dubbo版本号 | 支持dubbo注解  | SpringMVC demo | SpringBoot demo
 | --- | --- | --- | --- | --- |
 | 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | :white_check_mark: 有 | 无
-| 2.0.0-SNAPSHOT | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)
+| 2.0.0 | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)
 
+更新日志参见[Release Page](https://github.com/Sayi/swagger-dubbo/releases)
+
+**TO DO**：未来计划基于swagger-dubbo建立一个微服务文档中心，将团队内所有微服务文档整合到一起，支持文档搜索。
 
 ## Maven
 ```xml
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
 ## 两步集成
 
-1. 使用注解 `@EnableDubboSwagger`开启dubbo的swagger文档。
+一. 使用注解 `@EnableDubboSwagger`开启dubbo的swagger文档。
 ```java
 package com.deepoove.swagger.dubbo.example;
 
@@ -46,7 +49,7 @@ public class SwaggerDubboConfig {
 }
 ```
 
-2. 在spring的*-servlet.xml配置中，开启属性占位符的配置，开启Configuration注解，声明SwaggerDubboConfig。
+二. 在spring的*-servlet.xml配置中，开启属性占位符的配置，开启Configuration注解，声明SwaggerDubboConfig。
 
 ```xml
 <context:annotation-config />
@@ -54,7 +57,7 @@ public class SwaggerDubboConfig {
 <context:property-placeholder />
 ```
 
-OK，集成完毕。启动web容器，浏览器访问 `http://ip:port/context/swagger-dubbo/api-docs`查看swagger文档。
+集成已经完毕，启动web容器，浏览器访问 `http://ip:port/context/swagger-dubbo/api-docs`查看文档。
 ```json
 {
   "swagger": "2.0",
@@ -162,7 +165,7 @@ swagger.dubbo.enable = true
 ```
 
 ## SpringBoot 集成 Swagger-dubbo
-SpringBoot对配置做了简化，集成swagger-dubbo只需要做第一步就可以了：使用注解 `@EnableDubboSwagger`开启dubbo的swagger文档。
+SpringBoot对配置做了简化，集成swagger-dubbo只需要做第一步就可以了：使用注解 `@EnableDubboSwagger`开启dubbo的swagger文档。参见[spring-boot示例](swagger-dubbo-example/dubbo-provider-springboot)
 
 ## swagger-dubbo集成注意事项
 * 对于服务接口方法重载，为了在http请求中唯一确认一个方法，需要使用注解`@ApiOperation(nickname = "byArea")`,通过nickname标记唯一路径(如果不填写，将只显示一个方法)。此时，rest的请求地址为：`http://ip:port/h/com.XXX.XxService/method/byArea`
