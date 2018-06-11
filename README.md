@@ -120,11 +120,12 @@ public class SwaggerDubboConfig {
 
 
 ## swagger-ui查看文档
-swagger-ui的原理是解析swagger的json数据渲染成页面。
 
-我们可以在任何能托管页面的容器内集成swagger-ui，然后配置swagger-dubbo提供的`http://ip:port/context/swagger-dubbo/api-docs`，可能需要跨域支持。
+可以在任何能托管页面的容器内集成swagger-ui，配置swagger-dubbo提供的`http://ip:port/context/swagger-dubbo/api-docs`，可能需要跨域支持，详情参见官方文档 [swagger-ui](https://github.com/swagger-api/swagger-ui)
 
-详情参见swagger-ui官方文档 [Swagger UI](https://github.com/swagger-api/swagger-ui)
+@JKTerrific 在swagger-ui基础上开发了[**swagger-dubbo-ui**](https://github.com/JKTerrific/swagger-dubbo-ui), 解决了页面上的一些展示问题：
+* 参数为model时，输入框变更为输入域，并且支持JSON可视化
+* Model字段为date、byte时，支持展示具体类型，而不是string
 
 ![](swagger-dubbo-example/swagger_ui.png)
 
@@ -171,7 +172,7 @@ SpringBoot对配置做了简化，集成swagger-dubbo只需要做第一步就可
 * 对于服务接口方法重载，为了在http请求中唯一确认一个方法，需要使用注解`@ApiOperation(nickname = "byArea")`,通过nickname标记唯一路径(如果不填写，将只显示一个方法)。此时，rest的请求地址为：`http://ip:port/h/com.XXX.XxService/method/byArea`
 [Stackoverflow:重载的方法能够映射到同一URL地址吗](http://stackoverflow.com/questions/17196766/can-resteasy-choose-method-based-on-query-params)
 
-* Object对象作为http请求参数为json string格式。格式不正确会导致解析错误。
+* Object对象作为http请求参数为json string格式。
 [Stackoverflow:POST的方法能够接收多个参数吗？](http://stackoverflow.com/questions/5553218/jax-rs-post-multiple-objects)
 
 * swagger注解既可以写在接口上，也可以写在实现类上。 
