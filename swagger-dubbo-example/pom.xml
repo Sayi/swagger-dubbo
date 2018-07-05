@@ -31,5 +31,6 @@
 	<modules>
 		<module>dubbo-api</module>
 		<module>dubbo-provider</module>
+    <module>dubbo-provider-springboot</module>
 	</modules>
 </project>

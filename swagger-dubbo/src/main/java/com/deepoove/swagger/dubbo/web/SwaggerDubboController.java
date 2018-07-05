@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ import io.swagger.config.SwaggerConfig;
 import io.swagger.models.Swagger;
 import springfox.documentation.spring.web.json.Json;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
 @Controller
 @RequestMapping("${swagger.dubbo.doc:swagger-dubbo}")
 @Api(hidden = true)
@@ -71,5 +73,4 @@ public class SwaggerDubboController {
 		swaggerDocCache.setSwagger(swagger);
 		return new ResponseEntity<Json>(new Json(io.swagger.util.Json.mapper().writeValueAsString(swagger)), HttpStatus.OK);
 	}
-
 }
