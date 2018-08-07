@@ -6,6 +6,7 @@ import com.chevrolet.api.dto.request.BaseCarQueryReq;
 import com.subaru.common.entity.APIResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public interface BaseCarService {
      * @return
      */
     @ApiOperation("根据车辆ID返回车辆基本信息")
-    APIResult<BaseCarDTO> getCarById(Long carId);
+    APIResult<BaseCarDTO> getCarById(@ApiParam(value = "基础车id")Long carId);
 
     /**
      * 批量根据车辆ID返回车辆基本信息
@@ -31,7 +32,8 @@ public interface BaseCarService {
      * @param carIds
      * @return
      */
-    APIResult<Map<Long, BaseCarDTO>> getCarsByIds(List<Long> carIds);
+    @ApiOperation("批量根据车辆ID返回车辆基本信息")
+    APIResult<Map<Long, BaseCarDTO>> getCarsByIds(@ApiParam(value = "基础车id列表")List<Long> carIds);
 
     /**
      * 添加基础车辆信息
@@ -39,7 +41,8 @@ public interface BaseCarService {
      * @param baseCarDTO
      * @return
      */
-    APIResult<Long> addBaseCar(BaseCarDTO baseCarDTO);
+    @ApiOperation("添加基础车辆信息")
+    APIResult<Long> addBaseCar(@ApiParam(value = "基础车信息")BaseCarDTO baseCarDTO);
 
     /**
      * <p> 批量保存基础车辆信息 </p>
@@ -52,14 +55,16 @@ public interface BaseCarService {
      * @since V1.1.0-SNAPSHOT
      *
      */
-    APIResult<List<Long>> batchSaveCarDTO(BaseCarDTO baseCarDTO, Integer carNumber);
+    @ApiOperation("批量保存基础车辆信息")
+    APIResult<List<Long>> batchSaveCarDTO(@ApiParam(value = "基础车信息")BaseCarDTO baseCarDTO, @ApiParam(value = "要保存的车辆数量")Integer carNumber);
 
     /**
      * 更新基础车辆信息
      * @param baseCarDTO
      * @return
      */
-    APIResult<Boolean> updateBaseCar(BaseCarDTO baseCarDTO);
+    @ApiOperation("更新基础车辆信息")
+    APIResult<Boolean> updateBaseCar(@ApiParam(value = "基础车信息")BaseCarDTO baseCarDTO);
 
 //    /**
 //     * 获取未知模型车辆分页信息
@@ -76,7 +81,8 @@ public interface BaseCarService {
      * @param carUnique
      * @return
      */
-    APIResult<List<BaseCarDTO>> getCarsByCarUnique(String carUnique);
+    @ApiOperation("根据carUnique返回车辆信息")
+    APIResult<List<BaseCarDTO>> getCarsByCarUnique(@ApiParam(value = "车架号")String carUnique);
 
     /**
      * 根据carUniques返回车辆信息
@@ -86,7 +92,8 @@ public interface BaseCarService {
      * @param carUniques
      * @return
      */
-    APIResult<List<BaseCarDTO>> getCarsByCarUniques(List<String> carUniques);
+    @ApiOperation("根据carUniques返回车辆信息")
+    APIResult<List<BaseCarDTO>> getCarsByCarUniques(@ApiParam(value = "车架号列表")List<String> carUniques);
 
     /**
      * 根据carIds返回车辆信息
@@ -96,7 +103,8 @@ public interface BaseCarService {
      * @param carIds
      * @return
      */
-    APIResult<List<BaseCarDTO>> getCarsByCarIds(List<Long> carIds);
+    @ApiOperation("根据carIds返回车辆信息")
+    APIResult<List<BaseCarDTO>> getCarsByCarIds(@ApiParam(value = "基础车id列表")List<Long> carIds);
 
     /**
      * 根据车架号模糊查询车辆
@@ -106,7 +114,8 @@ public interface BaseCarService {
      * @param fuzzyCarUnique
      * @return
      */
-    APIResult<List<BaseCarDTO>> getCarsByFuzzyCarUnique(String fuzzyCarUnique);
+    @ApiOperation("根据车架号模糊查询车辆")
+    APIResult<List<BaseCarDTO>> getCarsByFuzzyCarUnique(@ApiParam(value = "模糊车架号")String fuzzyCarUnique);
 
 
     /**
@@ -116,10 +125,11 @@ public interface BaseCarService {
      *
      * @return
      */
-    APIResult<List<BaseCarDTO>> queryCarsByQueryReq(BaseCarQueryReq baseCarQueryReq);
+    @ApiOperation("查询车辆信息，支持带物权查询")
+    APIResult<List<BaseCarDTO>> queryCarsByQueryReq(@ApiParam(value = "基础车辆请求对象")BaseCarQueryReq baseCarQueryReq);
 
-
-    APIResult<Boolean> batchUpdateByCarIds(BaseCarDTO baseCarDTO, List<Long> carIds);
+    @ApiOperation("批量更新基础车辆信息")
+    APIResult<Boolean> batchUpdateByCarIds(@ApiParam(value = "基础车辆信息")BaseCarDTO baseCarDTO, @ApiParam(value = "基础车id列表")List<Long> carIds);
 
 //    APIResult<List<BaseCarDTO>> getCarsWithSuperByCarIds(List<Long> carIds);
 
@@ -128,20 +138,23 @@ public interface BaseCarService {
      * @param carQuery
      * @return
      */
-    APIResult<List<Long>> queryLimitCar(LimitCarQuery carQuery);
+    @ApiOperation("获取从fromCarId开始的n条记录")
+    APIResult<List<Long>> queryLimitCar(@ApiParam(value = "基础车辆请求对象")LimitCarQuery carQuery);
 
     /**
      * 根据carIds返回车辆信息,包括已删除的
      * @param carIds
      * @return
      */
-    APIResult<List<BaseCarDTO>> getCarsByCarIdsIncludeDeleted(List<Long> carIds);
+    @ApiOperation("根据carIds返回车辆信息,包括已删除的")
+    APIResult<List<BaseCarDTO>> getCarsByCarIdsIncludeDeleted(@ApiParam(value = "基础车id列表")List<Long> carIds);
 
     /**
      * 根据carUniques返回车辆信息,包括已删除的
      * @param carUniques
      * @return
      */
-    APIResult<List<BaseCarDTO>> getCarsByCarUniquesIncludeDeleted(List<String> carUniques);
+    @ApiOperation("根据carUniques返回车辆信息,包括已删除的")
+    APIResult<List<BaseCarDTO>> getCarsByCarUniquesIncludeDeleted(@ApiParam(value = "车架号列表")List<String> carUniques);
 
 }
