@@ -440,18 +440,30 @@ public class DubboReaderExtension implements ReaderExtension {
 
 	private Parameter readParam(Swagger swagger, Type type,Class<?> cls, ApiParam param) {
 		PrimitiveType fromType = PrimitiveType.fromType(type);
-		final Parameter para = null == fromType ? new BodyParameter() : new QueryParameter();
+		final Parameter para;
+        if (cls != null && (cls.isAssignableFrom(List.class) || cls.isAssignableFrom(Set.class) || cls.isAssignableFrom(Map.class))) {
+			para = new QueryParameter();
+		} else if (null == fromType) {
+			para = new BodyParameter();
+		} else {
+			para = new QueryParameter();
+		}
+
 		Parameter parameter = ParameterProcessor.applyAnnotations(swagger, para,
 				type == null ? String.class : type, null == param ? new ArrayList<Annotation>()
 						: Collections.<Annotation> singletonList(param));
 		if (parameter instanceof AbstractSerializableParameter) {
 			final AbstractSerializableParameter<?> p = (AbstractSerializableParameter<?>) parameter;
-			if (p.getType() == null) p.setType(null == fromType ? "string" : fromType.getCommonName());
+			if (p.getType() == null){
+			    p.setType(null == fromType ? "string" : fromType.getCommonName());
+                if(null == fromType && cls != null){
+                    p.setType(cls.getSimpleName());
+                }
+			}
 			p.setRequired(p.getRequired() == true ? true : cls.isPrimitive());
 		}else{
 		    //hack: Get the from data model paramter from BodyParameter
 		    BodyParameter bp = (BodyParameter)parameter;
-		    bp.setIn("formData");
 		}
 		return parameter;
 	}
