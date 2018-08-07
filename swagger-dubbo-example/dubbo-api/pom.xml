@@ -22,5 +22,30 @@
 		    <artifactId>swagger-annotations</artifactId>
 		    <version>1.5.16</version>
 		</dependency>
+
+		<dependency>
+			<groupId>com.mhc.framework</groupId>
+			<artifactId>business-support-common</artifactId>
+			<version>1.1.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.16.18</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>com.mhc</groupId>
+			<artifactId>subaru-common</artifactId>
+			<version>1.0.8-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.aspectj</groupId>
+					<artifactId>aspectjrt</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 	</dependencies>
 </project>
