@@ -67,7 +67,8 @@ public class Reader {
 	public static void read(Swagger swagger, Map<Class<?>, Object> interfaceMapRef,
 			String httpContext) {
 		final Reader reader = new Reader(swagger);
-		List<Entry<Class<?>, Object>> arrayList = new ArrayList<Entry<Class<?>, Object>>(interfaceMapRef.entrySet());
+		List<Entry<Class<?>, Object>> arrayList = new ArrayList<Entry<Class<?>, Object>>(
+				interfaceMapRef.entrySet());
 		Collections.sort(arrayList, new Comparator<Entry<Class<?>, Object>>() {
 			@Override
 			public int compare(Entry<Class<?>, Object> o1, Entry<Class<?>, Object> o2) {
@@ -75,15 +76,12 @@ public class Reader {
 			}
 		});
 		for (Entry<Class<?>, Object> entry : arrayList) {
-			final ReaderContext context = new ReaderContext(swagger,
-					entry.getValue().getClass(), entry.getKey(), httpContext, null, false,
-					new ArrayList<String>(), new ArrayList<String>(), new ArrayList<String>(),
-					new ArrayList<Parameter>());
+			final ReaderContext context = new ReaderContext(swagger, entry.getValue().getClass(),
+					entry.getKey(), httpContext, null, false, new ArrayList<String>(),
+					new ArrayList<String>(), new ArrayList<String>(), new ArrayList<Parameter>());
 			reader.read(context);
 		}
 	}
-
-	
 
 	private void read(ReaderContext context) {
 		final SwaggerDefinition swaggerDefinition = context.getCls()
@@ -96,18 +94,19 @@ public class Reader {
 			@Override
 			public int compare(Method o1, Method o2) {
 				return o1.getName().compareTo(o2.getName());
-			}});
+			}
+		});
 		Map<Method, Method> serviceMethods = new LinkedHashMap<Method, Method>();
 		for (Method method : interfaceMethodList) {
 			if (!ReflectionUtils.isOverriddenMethod(method, context.getCls())) {
 				serviceMethods.put(method, getRefMethod(context, method));
 			}
 		}
-		
+
 		for (Entry<Method, Method> entry : serviceMethods.entrySet()) {
 			Method method = entry.getValue();
 			Method interfaceMethod = entry.getKey();
-			
+
 			final Operation operation = new Operation();
 			String operationPath = null;
 			String httpMethod = null;
@@ -133,7 +132,8 @@ public class Reader {
 				extension.applySchemes(context, operation, method);
 				extension.applySecurityRequirements(context, operation, method);
 				extension.applyTags(context, operation, method);
-				extension.applyResponses(context, operation, method);
+
+				extension.applyResponses(context, operation, interfaceMethod);
 				extension.applyParameters(context, operation, method, interfaceMethod);
 				extension.applyImplicitParameters(context, operation, method);
 				extension.applyExtensions(context, operation, method);

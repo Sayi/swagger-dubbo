@@ -28,7 +28,6 @@ public class DubboPropertyConfig implements SwaggerConfig, ServletContextAware {
 	@Value("${swagger.dubbo.application.artifactId}")
 	private String artifactId;
 	
-	@Autowired
     private ServletContext servletContext;
 
 	private static String dependencyHtml = "&lt;dependency&gt;<br/>" 
