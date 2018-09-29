@@ -22,7 +22,8 @@ swagger-dubbo从某些方面提高了内部开发测试的效率，**注意的�
 
 更新日志参见[Release Page](https://github.com/Sayi/swagger-dubbo/releases)
 
-**TO DO**：接下来想基于swagger-dubbo建立一个**微服务文档中心**，将团队内所有微服务文档整合到一起，支持文档搜索，如果你有想法，欢迎联系我。
+## 规划🌱 
+建立一个**微服务文档中心**，将团队内所有微服务文档整合到一起，支持文档搜索，如果你有想法，欢迎联系我。
 
 ## Maven
 ```xml
