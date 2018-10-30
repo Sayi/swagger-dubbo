@@ -179,6 +179,4 @@ SpringBoot对配置做了简化，集成swagger-dubbo只需要做第一步就可
 * swagger注解既可以写在接口上，也可以写在实现类上。 
 * 原生类型作为http请求参数为必填。
 
-### [文章：探讨Dubbo与Swagger的集成](https://github.com/Sayi/sayi.github.com/issues/15)
-
  
