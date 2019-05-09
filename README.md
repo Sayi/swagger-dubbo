@@ -1,3 +1,7 @@
+## 公告：:balloon: :balloon: :balloon:  🌱 🌱 🌱 
+
+将最初版本的代码放到GitHub后，swagger-dubbo已经 **很久没有精力维护** 了，也很久没有关注过Issues的问题。随着dubbo的蓬勃发展，个人对这个项目又有了一点新的期待和想法，希望找到对dubbo和文档化感兴趣的开发者一起将swagger-dubbo提升一个档次，目前开通了群聊频道，欢迎加入：[加入Gitter群](https://gitter.im/Sayi/swagger-dubbo)
+
 ## swagger-dubbo
 
 [![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo) ![jdk1.6+](https://img.shields.io/badge/jdk-1.6%2B-orange.svg) ![dubbo2.6.0+](https://img.shields.io/badge/dubbo-2.6.0%2B-blue.svg)
@@ -22,8 +26,6 @@ swagger-dubbo从某些方面提高了内部开发测试的效率，**注意的�
 
 更新日志参见[Release Page](https://github.com/Sayi/swagger-dubbo/releases)
 
-## 规划🌱 
-建立一个**微服务文档中心**，将团队内所有微服务文档整合到一起，支持文档搜索，如果你有想法，欢迎联系我。
 
 ## Maven
 ```xml
