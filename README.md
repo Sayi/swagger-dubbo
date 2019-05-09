@@ -1,6 +1,6 @@
 ## 公告：:balloon: :balloon: :balloon:  🌱 🌱 🌱 
 
-将最初版本的代码放到GitHub后，swagger-dubbo已经 **很久没有精力维护** 了，也很久没有关注过Issues的问题。虽然正常使用并没有问题，但是随着dubbo的蓬勃发展，个人对这个项目又有了一点新的期待和想法(功能和架构上)，目前开通了群聊频道，欢迎加入讨论：[加入Gitter群](https://gitter.im/Sayi/swagger-dubbo)
+随着dubbo的蓬勃发展，个人对这个项目又有了一点新的期待和想法(功能和架构上)，目前开通了群聊频道，欢迎加入讨论：[加入Gitter群](https://gitter.im/Sayi/swagger-dubbo)
 
 ## swagger-dubbo
 
