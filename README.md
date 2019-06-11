@@ -2,6 +2,13 @@
 
 随着dubbo的蓬勃发展，个人对这个项目又有了一点新的期待和想法(功能和架构上)，目前开通了群聊频道，欢迎加入讨论：[加入Gitter群](https://gitter.im/Sayi/swagger-dubbo)
 
+![image](https://user-images.githubusercontent.com/1394854/59253538-0bd90880-8c61-11e9-81e5-aacdcfc3949b.png)
+
+* swagger-dubbo起一个解析Swagger和收集文档的作用
+* dubbo-swagger-doc是一个web应用，从注册中心获取所有文档，是一个dubbo接口的swagger文档
+* dubbo-static-doc是一个dubbo接口的静态文档
+* dubbo-apidoc是一个dubbo接口的javaAPI文档
+
 ## swagger-dubbo
 
 [![Build Status](https://travis-ci.org/Sayi/swagger-dubbo.svg?branch=master)](https://travis-ci.org/Sayi/swagger-dubbo) ![jdk1.6+](https://img.shields.io/badge/jdk-1.6%2B-orange.svg) ![dubbo2.6.0+](https://img.shields.io/badge/dubbo-2.6.0%2B-blue.svg)
