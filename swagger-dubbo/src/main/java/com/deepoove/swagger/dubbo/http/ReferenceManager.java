@@ -8,14 +8,18 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ReferenceConfig;
+import org.apache.dubbo.config.spring.ServiceBean;
+import org.apache.dubbo.config.spring.extension.SpringExtensionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
-import com.alibaba.dubbo.config.ApplicationConfig;
-import com.alibaba.dubbo.config.ReferenceConfig;
-import com.alibaba.dubbo.config.spring.ServiceBean;
-import com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory;
+//import com.alibaba.dubbo.config.ApplicationConfig;
+//import com.alibaba.dubbo.config.ReferenceConfig;
+//import com.alibaba.dubbo.config.spring.ServiceBean;
+//import com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory;
 
 public class ReferenceManager {
     
