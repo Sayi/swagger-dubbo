@@ -42,7 +42,8 @@ public class ReferenceManager {
         instance = new ReferenceManager();
         services = new HashSet<ServiceBean>();
         try {
-            Field field = SpringExtensionFactory.class.getDeclaredField("contexts");
+//            Field field = SpringExtensionFactory.class.getDeclaredField("contexts");
+            Field field = SpringExtensionFactory.class.getDeclaredField("CONTEXTS");
             field.setAccessible(true);
             Set<ApplicationContext> contexts = (Set<ApplicationContext>)field.get(new SpringExtensionFactory());
             for (ApplicationContext context : contexts){

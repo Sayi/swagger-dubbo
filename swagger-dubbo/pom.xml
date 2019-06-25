@@ -11,12 +11,13 @@
     <artifactId>swagger-dubbo</artifactId>
     <packaging>jar</packaging>
     <name>swagger-dubbo</name>
+    <version>auge-2.0.1</version>
     <url>http://maven.apache.org</url>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
 
+    <dependencies>
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-core</artifactId>
