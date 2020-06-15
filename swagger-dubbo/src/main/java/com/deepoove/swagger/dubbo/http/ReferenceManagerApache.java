@@ -8,18 +8,18 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ReferenceConfig;
+import org.apache.dubbo.config.spring.ServiceBean;
+import org.apache.dubbo.config.spring.extension.SpringExtensionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 
-import com.alibaba.dubbo.config.ApplicationConfig;
-import com.alibaba.dubbo.config.ReferenceConfig;
-import com.alibaba.dubbo.config.spring.ServiceBean;
-import com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory;
 
-public class ReferenceManager implements IRefrenceManager {
+public class ReferenceManagerApache implements IRefrenceManager {
     
-    private static Logger logger = LoggerFactory.getLogger(ReferenceManager.class);
+    private static Logger logger = LoggerFactory.getLogger(ReferenceManagerApache.class);
 
     @SuppressWarnings("rawtypes")
     private static Collection<ServiceBean> services;
@@ -29,8 +29,7 @@ public class ReferenceManager implements IRefrenceManager {
 
     private static ApplicationConfig application;
 
-    public ReferenceManager() {
-        
+    public ReferenceManagerApache() {
     }
 
     @SuppressWarnings({ "rawtypes", "unchecked" })
@@ -40,7 +39,7 @@ public class ReferenceManager implements IRefrenceManager {
         }
         services = new HashSet<ServiceBean>();
         try {
-            Field field = SpringExtensionFactory.class.getDeclaredField("contexts");
+            Field field = SpringExtensionFactory.class.getDeclaredField("CONTEXTS");
             field.setAccessible(true);
             Set<ApplicationContext> contexts = (Set<ApplicationContext>)field.get(new SpringExtensionFactory());
             for (ApplicationContext context : contexts){
@@ -58,12 +57,9 @@ public class ReferenceManager implements IRefrenceManager {
 			ServiceBean<?> bean = services.toArray(new ServiceBean[]{})[0];
 			application = bean.getApplication();
         }
+        
     }
 
-    /* (non-Javadoc)
-     * @see com.deepoove.swagger.dubbo.http.IRefrenceManager#getProxy(java.lang.String)
-     */
-    @Override
     public Object getProxy(String interfaceClass) {
         init();
         Set<Entry<Class<?>, Object>> entrySet = interfaceMapProxy.entrySet();
@@ -86,10 +82,6 @@ public class ReferenceManager implements IRefrenceManager {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.deepoove.swagger.dubbo.http.IRefrenceManager#getRef(java.lang.String)
-     */
-    @Override
     public Entry<Class<?>, Object> getRef(String interfaceClass) {
         init();
         Set<Entry<Class<?>, Object>> entrySet = interfaceMapRef.entrySet();
@@ -99,29 +91,16 @@ public class ReferenceManager implements IRefrenceManager {
         return null;
     }
 
-    /* (non-Javadoc)
-     * @see com.deepoove.swagger.dubbo.http.IRefrenceManager#getServices()
-     */
-    @Override
-    @SuppressWarnings("rawtypes")
-    public Collection<ServiceBean> getServices() {
+    public Collection<?> getServices() {
         init();
         return services;
     }
 
-    /* (non-Javadoc)
-     * @see com.deepoove.swagger.dubbo.http.IRefrenceManager#getApplication()
-     */
-    @Override
-    public ApplicationConfig getApplication() {
+    public Object getApplication() {
         init();
         return application;
     }
 
-    /* (non-Javadoc)
-     * @see com.deepoove.swagger.dubbo.http.IRefrenceManager#getInterfaceMapRef()
-     */
-    @Override
     public Map<Class<?>, Object> getInterfaceMapRef() {
         init();
         return interfaceMapRef;

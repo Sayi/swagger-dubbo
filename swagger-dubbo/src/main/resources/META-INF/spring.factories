@@ -1,0 +1,4 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.deepoove.swagger.dubbo.config.SwaggerDubboProperties,\
+com.deepoove.swagger.dubbo.config.SwaggerDubboAutoConfiguration
+

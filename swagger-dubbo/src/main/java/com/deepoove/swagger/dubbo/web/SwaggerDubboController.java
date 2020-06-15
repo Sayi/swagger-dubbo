@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.deepoove.swagger.dubbo.config.DubboPropertyConfig;
 import com.deepoove.swagger.dubbo.config.DubboServiceScanner;
 import com.deepoove.swagger.dubbo.config.SwaggerDocCache;
+import com.deepoove.swagger.dubbo.config.SwaggerDubboProperties;
 import com.deepoove.swagger.dubbo.reader.Reader;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
@@ -33,9 +33,12 @@ public class SwaggerDubboController {
 	@Autowired
 	private DubboServiceScanner dubboServiceScanner;
 	@Autowired
-	private DubboPropertyConfig dubboPropertyConfig;
+	private SwaggerConfig dubboPropertyConfig;
 	@Autowired
 	private SwaggerDocCache swaggerDocCache;
+	
+    @Autowired
+    SwaggerDubboProperties swaggerDubboConfig;
 
 	@Value("${swagger.dubbo.http:h}")
 	private String httpContext;

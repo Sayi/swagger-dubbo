@@ -26,10 +26,12 @@ swagger-dubbo从某些方面提高了内部开发测试的效率，**注意的�
 
 
 ## 版本和计划
-| swagger-dubbo版本 | 支持dubbo版本号 | 支持dubbo注解  | SpringMVC demo | SpringBoot demo
+
+| swagger-dubbo版本 | 支持dubbo版本号 | 支持dubbo注解  | SpringMVC demo | SpringBoot demo|
 | --- | --- | --- | --- | --- |
-| 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | :white_check_mark: 有 | 无
-| 2.0.1 | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)
+| 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | :white_check_mark: 有 | 无|
+| 2.0.1 | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot) |
+| 2.0.2-SHAPSHOT | alibaba dubbo2.6.0+<br>apache dubbo2.7.6+ |  :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)<br>改进自动装配不需再写包扫描，改进yml提示 |
 
 更新日志参见[Release Page](https://github.com/Sayi/swagger-dubbo/releases)
 
@@ -39,7 +41,7 @@ swagger-dubbo从某些方面提高了内部开发测试的效率，**注意的�
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
-  <version>2.0.1</version>
+  <version>2.0.2-SNAPSHOT</version>
 </dependency>
 ```
 
