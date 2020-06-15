@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.deepoove.swagger.dubbo.config.SwaggerDubboProperties;
 import com.deepoove.swagger.dubbo.http.HttpMatch;
-import com.deepoove.swagger.dubbo.http.ReferenceManager;
+import com.deepoove.swagger.dubbo.http.IRefrenceManager;
 import com.deepoove.swagger.dubbo.reader.NameDiscover;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -33,16 +34,14 @@ import io.swagger.util.PrimitiveType;
 @RequestMapping("${swagger.dubbo.http:h}")
 @Api(hidden = true)
 public class DubboHttpController {
+    
+    @Autowired
+    IRefrenceManager refrenceManager;
 
 	private static Logger logger = LoggerFactory.getLogger(DubboHttpController.class);
-	
-	private static final String CLUSTER_RPC = "rpc";
 
-	@Value("${swagger.dubbo.enable:true}")
-	private boolean enable = true;
-	
-	@Value("${swagger.dubbo.cluster:rpc}")
-	private String cluster = CLUSTER_RPC;
+	@Autowired
+	SwaggerDubboProperties swaggerDubboConfig;
 
 	@RequestMapping(value = "/{interfaceClass}/{methodName}", produces = "application/json; charset=utf-8")
 	@ResponseBody
@@ -58,13 +57,13 @@ public class DubboHttpController {
 			@PathVariable("methodName") String methodName,
 			@PathVariable("operationId") String operationId, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		if (!enable) { return new ResponseEntity<String>(HttpStatus.NOT_FOUND); }
+		if (!swaggerDubboConfig.isEnable()) { return new ResponseEntity<String>(HttpStatus.NOT_FOUND); }
 
 		Object ref = null;
 		Method method = null;
 		Object result = null;
 		
-		Entry<Class<?>, Object> entry = ReferenceManager.getInstance().getRef(interfaceClass);
+		Entry<Class<?>, Object> entry = refrenceManager.getRef(interfaceClass);
 		
 		if (null == entry){
 		    logger.info("No Ref Service FOUND.");
@@ -85,9 +84,9 @@ public class DubboHttpController {
 		}
 		String[] parameterNames = NameDiscover.parameterNameDiscover.getParameterNames(method);
 		
-		logger.info("[Swagger-dubbo] Invoke by " + cluster);
-		if (CLUSTER_RPC.equals(cluster)){
-    		ref = ReferenceManager.getInstance().getProxy(interfaceClass);
+		logger.info("[Swagger-dubbo] Invoke by " + swaggerDubboConfig.getCluster());
+		if (SwaggerDubboProperties.CLUSTER_RPC.equals(swaggerDubboConfig.getCluster())){
+    		ref = refrenceManager.getProxy(interfaceClass);
     		if (null == ref){
     		    logger.info("No Ref Proxy Service FOUND.");
                 return new ResponseEntity<String>(HttpStatus.NOT_FOUND);

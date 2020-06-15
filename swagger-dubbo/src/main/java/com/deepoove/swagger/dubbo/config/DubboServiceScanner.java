@@ -3,22 +3,24 @@ package com.deepoove.swagger.dubbo.config;
 import java.util.Map;
 import java.util.Set;
 
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.deepoove.swagger.dubbo.http.ReferenceManager;
+import com.deepoove.swagger.dubbo.http.IRefrenceManager;
 
 import io.swagger.config.Scanner;
 
-@Component
 public class DubboServiceScanner implements Scanner {
-
+    
+    @Autowired
+    IRefrenceManager refrenceManager;
+    
 	@Override
 	public Set<Class<?>> classes() {
 		return interfaceMapRef().keySet();
 	}
 	
 	public Map<Class<?>, Object> interfaceMapRef() {
-		return ReferenceManager.getInstance().getInterfaceMapRef();
+		return refrenceManager.getInterfaceMapRef();
 	}
 
 	@Override

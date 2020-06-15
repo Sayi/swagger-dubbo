@@ -5,9 +5,9 @@ import java.text.MessageFormat;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.dubbo.config.ApplicationConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.alibaba.dubbo.config.ApplicationConfig;
 import com.deepoove.swagger.dubbo.http.IRefrenceManager;
 
 import io.swagger.config.SwaggerConfig;
@@ -15,14 +15,14 @@ import io.swagger.models.Contact;
 import io.swagger.models.Info;
 import io.swagger.models.Swagger;
 
-public class DubboPropertyConfig implements SwaggerConfig {
-    
+public class DubboPropertyConfigApache implements SwaggerConfig {
+
     @Autowired
     IRefrenceManager refrenceManager;
     
     @Autowired
     SwaggerDubboProperties props;
-	
+    
 	@Autowired
     private ServletContext servletContext;
 
@@ -32,6 +32,9 @@ public class DubboPropertyConfig implements SwaggerConfig {
 										+ "&nbsp;&nbsp;&nbsp;&nbsp;&lt;version&gt;{2}&lt;/version&gt;<br/>" 
 										+ "&lt;/dependency&gt;<br/>";
 
+	/* (non-Javadoc)
+     * @see com.deepoove.swagger.dubbo.config.IDubboPropertyConfig#configure(io.swagger.models.Swagger)
+     */
 	@Override
 	public Swagger configure(Swagger swagger) {
 	    ApplicationConfig application = (ApplicationConfig) refrenceManager.getApplication();
@@ -42,10 +45,10 @@ public class DubboPropertyConfig implements SwaggerConfig {
 				swagger.setInfo(info);
 			}
 			info.setTitle(application.getName());
-
-            String groupId = props.getApplication().getGroupId();
-            String artifactId = props.getApplication().getArtifactId();
-            String version = props.getApplication().getVersion();
+			
+			String groupId = props.getApplication().getGroupId();
+			String artifactId = props.getApplication().getArtifactId();
+			String version = props.getApplication().getVersion();
 			version = StringUtils.isNotBlank(version) ? version : application.getVersion();
 			if (StringUtils.isNotBlank(groupId) 
 					&& StringUtils.isNotBlank(artifactId)
@@ -68,6 +71,9 @@ public class DubboPropertyConfig implements SwaggerConfig {
 		}
 	}
 
+	/* (non-Javadoc)
+     * @see com.deepoove.swagger.dubbo.config.IDubboPropertyConfig#getFilterClass()
+     */
 	@Override
 	public String getFilterClass() {
 		return null;

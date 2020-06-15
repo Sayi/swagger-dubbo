@@ -1,10 +1,7 @@
 package com.deepoove.swagger.dubbo.config;
 
-import org.springframework.stereotype.Component;
-
 import io.swagger.models.Swagger;
 
-@Component
 public class SwaggerDocCache {
 
 	private Swagger swagger;
