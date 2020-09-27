@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,7 +72,7 @@ public class DubboHttpController {
 		    return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 		ref = entry.getValue();
-		HttpMatch httpMatch = new HttpMatch(entry.getKey(), ref.getClass());
+		HttpMatch httpMatch = new HttpMatch(entry.getKey(), AopUtils.getTargetClass(ref));
 		Method[] interfaceMethods = httpMatch.findInterfaceMethods(methodName);
 
 		if (null != interfaceMethods && interfaceMethods.length > 0) {
