@@ -1,6 +1,7 @@
 package com.deepoove.swagger.dubbo.web;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Map.Entry;
@@ -76,8 +77,7 @@ public class DubboHttpController {
 		Method[] interfaceMethods = httpMatch.findInterfaceMethods(methodName);
 
 		if (null != interfaceMethods && interfaceMethods.length > 0) {
-			Method[] refMethods = httpMatch.findRefMethods(interfaceMethods, operationId,
-					request.getMethod());
+			Method[] refMethods = httpMatch.findRefMethods(interfaceMethods, operationId, request.getMethod());
 			method = httpMatch.matchRefMethod(refMethods, methodName, request.getParameterMap().keySet());
 		}
 		if (null == method) {
@@ -111,6 +111,9 @@ public class DubboHttpController {
 				Object suggestPrameterValue = suggestPrameterValue(parameterTypes[i],
 						parameterClazz[i], request.getParameter(parameterNames[i]));
 				args[i] = suggestPrameterValue;
+			}
+			if(AopUtils.isAopProxy(ref)) {
+				 method = ref.getClass().getMethod(operationId, parameterClazz);
 			}
 			result = method.invoke(ref, args);
 		}
