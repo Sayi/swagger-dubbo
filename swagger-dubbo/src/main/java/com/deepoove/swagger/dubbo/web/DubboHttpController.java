@@ -113,7 +113,7 @@ public class DubboHttpController {
 				args[i] = suggestPrameterValue;
 			}
 			if(AopUtils.isAopProxy(ref)) {
-				 method = ref.getClass().getMethod(operationId, parameterClazz);
+				 method = ref.getClass().getMethod(methodName, parameterClazz);
 			}
 			result = method.invoke(ref, args);
 		}
