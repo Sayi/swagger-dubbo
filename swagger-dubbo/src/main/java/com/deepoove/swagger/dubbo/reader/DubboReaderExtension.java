@@ -441,9 +441,24 @@ public class DubboReaderExtension implements ReaderExtension {
 	private Parameter readParam(Swagger swagger, Type type,Class<?> cls, ApiParam param) {
 		PrimitiveType fromType = PrimitiveType.fromType(type);
 		final Parameter para = null == fromType ? new BodyParameter() : new QueryParameter();
-		Parameter parameter = ParameterProcessor.applyAnnotations(swagger, para,
-				type == null ? String.class : type, null == param ? new ArrayList<Annotation>()
-						: Collections.<Annotation> singletonList(param));
+		Parameter parameter;
+		if (type == null) {
+			if (null == param) {
+				parameter = ParameterProcessor.applyAnnotations(swagger, para,
+						String.class, new ArrayList<Annotation>());
+			} else {
+				parameter = ParameterProcessor.applyAnnotations(swagger, para,
+						String.class, Collections.<Annotation>singletonList(param));
+			}
+		} else {
+			if (null == param) {
+				parameter = ParameterProcessor.applyAnnotations(swagger, para,
+						type, new ArrayList<Annotation>());
+			} else {
+				parameter = ParameterProcessor.applyAnnotations(swagger, para,
+						type, Collections.<Annotation>singletonList(param));
+			}
+		}
 		if (parameter instanceof AbstractSerializableParameter) {
 			final AbstractSerializableParameter<?> p = (AbstractSerializableParameter<?>) parameter;
 			if (p.getType() == null) p.setType(null == fromType ? "string" : fromType.getCommonName());

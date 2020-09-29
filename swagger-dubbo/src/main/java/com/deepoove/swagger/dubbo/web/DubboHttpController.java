@@ -1,6 +1,7 @@
 package com.deepoove.swagger.dubbo.web;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandle;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 import java.util.Map.Entry;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.aop.support.AopUtils;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,12 +73,11 @@ public class DubboHttpController {
 		    return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
 		}
 		ref = entry.getValue();
-		HttpMatch httpMatch = new HttpMatch(entry.getKey(), ref.getClass());
+		HttpMatch httpMatch = new HttpMatch(entry.getKey(), AopUtils.getTargetClass(ref));
 		Method[] interfaceMethods = httpMatch.findInterfaceMethods(methodName);
 
 		if (null != interfaceMethods && interfaceMethods.length > 0) {
-			Method[] refMethods = httpMatch.findRefMethods(interfaceMethods, operationId,
-					request.getMethod());
+			Method[] refMethods = httpMatch.findRefMethods(interfaceMethods, operationId, request.getMethod());
 			method = httpMatch.matchRefMethod(refMethods, methodName, request.getParameterMap().keySet());
 		}
 		if (null == method) {
@@ -110,6 +111,9 @@ public class DubboHttpController {
 				Object suggestPrameterValue = suggestPrameterValue(parameterTypes[i],
 						parameterClazz[i], request.getParameter(parameterNames[i]));
 				args[i] = suggestPrameterValue;
+			}
+			if(AopUtils.isAopProxy(ref)) {
+				 method = ref.getClass().getMethod(methodName, parameterClazz);
 			}
 			result = method.invoke(ref, args);
 		}
