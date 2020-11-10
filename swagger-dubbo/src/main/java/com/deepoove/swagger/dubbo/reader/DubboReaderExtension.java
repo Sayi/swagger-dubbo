@@ -3,16 +3,9 @@ package com.deepoove.swagger.dubbo.reader;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
+import io.swagger.models.properties.*;
 import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.databind.JavaType;
@@ -42,10 +35,6 @@ import io.swagger.models.parameters.BodyParameter;
 import io.swagger.models.parameters.FormParameter;
 import io.swagger.models.parameters.Parameter;
 import io.swagger.models.parameters.QueryParameter;
-import io.swagger.models.properties.ArrayProperty;
-import io.swagger.models.properties.MapProperty;
-import io.swagger.models.properties.Property;
-import io.swagger.models.properties.RefProperty;
 import io.swagger.util.BaseReaderUtils;
 import io.swagger.util.ParameterProcessor;
 import io.swagger.util.PathUtils;
@@ -466,7 +455,10 @@ public class DubboReaderExtension implements ReaderExtension {
 		}else{
 		    //hack: Get the from data model paramter from BodyParameter
 		    BodyParameter bp = (BodyParameter)parameter;
-		    bp.setIn("formData");
+			bp.setIn("body");
+			Property property = ModelConverters.getInstance().readAsProperty(type);
+			final Map<PropertyBuilder.PropertyId, Object> args = new EnumMap<PropertyBuilder.PropertyId, Object>(PropertyBuilder.PropertyId.class);
+			bp.setSchema(PropertyBuilder.toModel(PropertyBuilder.merge(property, args)));
 		}
 		return parameter;
 	}
