@@ -156,5 +156,6 @@
 	<modules>
 		<module>swagger-dubbo</module>
 		<module>swagger-dubbo-example</module>
+    <module>swagger-test</module>
 	</modules>
 </project>
