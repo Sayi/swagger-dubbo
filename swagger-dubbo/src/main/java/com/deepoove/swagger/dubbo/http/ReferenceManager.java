@@ -1,5 +1,13 @@
 package com.deepoove.swagger.dubbo.http;
 
+import org.apache.dubbo.config.ApplicationConfig;
+import org.apache.dubbo.config.ReferenceConfig;
+import org.apache.dubbo.config.spring.ServiceBean;
+import org.apache.dubbo.config.spring.extension.SpringExtensionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashSet;
@@ -8,17 +16,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
-
-import com.alibaba.dubbo.config.ApplicationConfig;
-import com.alibaba.dubbo.config.ReferenceConfig;
-import com.alibaba.dubbo.config.spring.ServiceBean;
-import com.alibaba.dubbo.config.spring.extension.SpringExtensionFactory;
-
 public class ReferenceManager {
-    
+
     private static Logger logger = LoggerFactory.getLogger(ReferenceManager.class);
 
     @SuppressWarnings("rawtypes")
@@ -30,18 +29,19 @@ public class ReferenceManager {
     private static ReferenceManager instance;
     private static ApplicationConfig application;
 
-    private ReferenceManager() {}
+    private ReferenceManager() {
+    }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({"rawtypes", "unchecked"})
     public synchronized static ReferenceManager getInstance() {
         if (null != instance) return instance;
         instance = new ReferenceManager();
         services = new HashSet<ServiceBean>();
         try {
-            Field field = SpringExtensionFactory.class.getDeclaredField("contexts");
+            Field field = SpringExtensionFactory.class.getDeclaredField("CONTEXTS");
             field.setAccessible(true);
-            Set<ApplicationContext> contexts = (Set<ApplicationContext>)field.get(new SpringExtensionFactory());
-            for (ApplicationContext context : contexts){
+            Set<ApplicationContext> contexts = (Set<ApplicationContext>) field.get(new SpringExtensionFactory());
+            for (ApplicationContext context : contexts) {
                 services.addAll(context.getBeansOfType(ServiceBean.class).values());
             }
         } catch (Exception e) {
@@ -51,26 +51,28 @@ public class ReferenceManager {
         for (ServiceBean<?> bean : services) {
             interfaceMapRef.putIfAbsent(bean.getInterfaceClass(), bean.getRef());
         }
-        
+
         //
         if (!services.isEmpty()) {
-			ServiceBean<?> bean = services.toArray(new ServiceBean[]{})[0];
-			application = bean.getApplication();
+            ServiceBean<?> bean = services.toArray(new ServiceBean[]{})[0];
+            application = bean.getApplication();
         }
-        
+
         return instance;
     }
 
     public Object getProxy(String interfaceClass) {
         Set<Entry<Class<?>, Object>> entrySet = interfaceMapProxy.entrySet();
         for (Entry<Class<?>, Object> entry : entrySet) {
-            if (entry.getKey().getName().equals(interfaceClass)) { return entry.getValue(); }
+            if (entry.getKey().getName().equals(interfaceClass)) {
+                return entry.getValue();
+            }
         }
 
         for (ServiceBean<?> service : services) {
             if (interfaceClass.equals(service.getInterfaceClass().getName())) {
                 ReferenceConfig<Object> reference = new ReferenceConfig<Object>();
-                reference.setApplication(service.getApplication());
+                reference.setBootstrap(service.getBootstrap());
                 reference.setRegistry(service.getRegistry());
                 reference.setRegistries(service.getRegistries());
                 reference.setInterface(service.getInterfaceClass());
@@ -85,7 +87,9 @@ public class ReferenceManager {
     public Entry<Class<?>, Object> getRef(String interfaceClass) {
         Set<Entry<Class<?>, Object>> entrySet = interfaceMapRef.entrySet();
         for (Entry<Class<?>, Object> entry : entrySet) {
-            if (entry.getKey().getName().equals(interfaceClass)) { return entry; }
+            if (entry.getKey().getName().equals(interfaceClass)) {
+                return entry;
+            }
         }
         return null;
     }

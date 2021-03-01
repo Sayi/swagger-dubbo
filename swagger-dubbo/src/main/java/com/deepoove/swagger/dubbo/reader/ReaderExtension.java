@@ -1,10 +1,10 @@
 package com.deepoove.swagger.dubbo.reader;
 
+import io.swagger.models.Operation;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-
-import io.swagger.models.Operation;
 
 /**
  * The <code>ReaderExtension</code> interface defines methods for scans resources for Swagger.
@@ -159,7 +159,7 @@ public interface ReaderExtension {
      */
     void applyExtensions(ReaderContext context, Operation operation, Method method);
 
-	void applyParameters(ReaderContext context, Operation operation, Method method,
-			Method interfaceMethod);
+    void applyParameters(ReaderContext context, Operation operation, Method method,
+                         Method interfaceMethod);
 
 }
