@@ -7,15 +7,15 @@ import io.swagger.models.Info;
 import io.swagger.models.Swagger;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.ApplicationConfig;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.ServletContextAware;
 
 import javax.servlet.ServletContext;
 import java.text.MessageFormat;
 
 @Component
-public class DubboPropertyConfig implements SwaggerConfig {
+public class DubboPropertyConfig implements SwaggerConfig, ServletContextAware {
 
     @Value("${swagger.dubbo.application.version:}")
     private String version;
@@ -24,7 +24,6 @@ public class DubboPropertyConfig implements SwaggerConfig {
     @Value("${swagger.dubbo.application.artifactId:}")
     private String artifactId;
 
-    @Autowired
     private ServletContext servletContext;
 
     private static String mavenDependency = "&lt;dependency&gt;<br/>"
@@ -71,4 +70,8 @@ public class DubboPropertyConfig implements SwaggerConfig {
         return null;
     }
 
+    @Override
+    public void setServletContext(ServletContext servletContext) {
+        this.servletContext = servletContext;
+    }
 }
