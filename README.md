@@ -1,3 +1,5 @@
+## Dubbo的Swagger服务文档（鉴于原分支版本过老存在的问题，本分支进行了新版本dubbo的适配）
+
 ## 公告：:balloon: :balloon: :balloon:  🌱 🌱 🌱 
 
 随着dubbo的蓬勃发展，个人对这个项目又有了一点新的期待和想法(功能和架构上)，目前开通了群聊频道，欢迎加入讨论：[加入Gitter群](https://gitter.im/Sayi/swagger-dubbo)
@@ -30,6 +32,7 @@ swagger-dubbo从某些方面提高了内部开发测试的效率，**注意的�
 | --- | --- | --- | --- | --- |
 | 1.1.0 [**移步老版本文档分支**](https://github.com/Sayi/swagger-dubbo/tree/1.1.0-release) | dubbo2.5.3 | 否 | :white_check_mark: 有 | 无
 | 2.0.1 | dubbo2.6.0+ | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)
+| 2.0.1_update | apache版本dubbo | :white_check_mark: 是 | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider) | :white_check_mark: 有，[示例文档](swagger-dubbo-example/dubbo-provider-springboot)
 
 更新日志参见[Release Page](https://github.com/Sayi/swagger-dubbo/releases)
 

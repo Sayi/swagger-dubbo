@@ -1,20 +1,19 @@
 package com.deepoove.swagger.dubbo.config;
 
-import org.springframework.stereotype.Component;
-
 import io.swagger.models.Swagger;
+import org.springframework.stereotype.Component;
 
 @Component
 public class SwaggerDocCache {
 
-	private Swagger swagger;
+    private Swagger swagger;
 
-	public Swagger getSwagger() {
-		return swagger;
-	}
+    public Swagger getSwagger() {
+        return swagger;
+    }
 
-	public void setSwagger(Swagger swagger) {
-		this.swagger = swagger;
-	}
+    public void setSwagger(Swagger swagger) {
+        this.swagger = swagger;
+    }
 
 }
