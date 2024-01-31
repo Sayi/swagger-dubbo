@@ -60,6 +60,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.deepoove</groupId>
+            <artifactId>swagger-dubbo</artifactId>
+            <version>3.0.0-beta</version>
+        </dependency>
     </dependencies>
 
     <build>

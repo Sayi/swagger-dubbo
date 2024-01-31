@@ -46,7 +46,8 @@ public class DubboHttpController {
     @Value("${swagger.dubbo.cluster:rpc}")
     private String cluster = CLUSTER_RPC;
 
-    @RequestMapping(value = "/{interfaceClass}/{methodName}", produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/{interfaceClass}/{methodName}", produces = {"application/json; charset=utf-8",
+            "application/x-www-form-urlencoded"})
     @ResponseBody
     public ResponseEntity<String> invokeDubbo(@PathVariable("interfaceClass") String interfaceClass,
                                               @PathVariable("methodName") String methodName, HttpServletRequest request,
@@ -54,11 +55,13 @@ public class DubboHttpController {
         return invokeDubbo(interfaceClass, methodName, null, request, response);
     }
 
-    @RequestMapping(value = "/{interfaceClass}/{methodName}/{operationId}", produces = "application/json; charset=utf-8")
+    @RequestMapping(value = "/{interfaceClass}/{methodName}/{operationId}", produces = "application/json; " +
+            "charset=utf-8")
     @ResponseBody
     public ResponseEntity<String> invokeDubbo(@PathVariable("interfaceClass") String interfaceClass,
                                               @PathVariable("methodName") String methodName,
-                                              @PathVariable("operationId") String operationId, HttpServletRequest request,
+                                              @PathVariable("operationId") String operationId,
+                                              HttpServletRequest request,
                                               HttpServletResponse response) throws Exception {
         if (!enable) {
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
@@ -101,7 +104,9 @@ public class DubboHttpController {
                 return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
             }
         }
-        logger.debug("[Swagger-dubbo] Invoke dubbo service method:{},parameter:{}", method, Json.pretty(request.getParameterMap()));
+        logger.debug("[Swagger-dubbo] Invoke dubbo service method:{},parameter:{}",
+                     method,
+                     Json.pretty(request.getParameterMap()));
         if (null == parameterNames || parameterNames.length == 0) {
             result = method.invoke(ref);
         } else {
@@ -111,7 +116,8 @@ public class DubboHttpController {
 
             for (int i = 0; i < parameterNames.length; i++) {
                 Object suggestPrameterValue = suggestPrameterValue(parameterTypes[i],
-                        parameterClazz[i], request.getParameter(parameterNames[i]));
+                                                                   parameterClazz[i],
+                                                                   request.getParameter(parameterNames[i]));
                 args[i] = suggestPrameterValue;
             }
             if (AopUtils.isAopProxy(ref)) {
@@ -122,8 +128,8 @@ public class DubboHttpController {
         return ResponseEntity.ok(Json.mapper().writeValueAsString(result));
     }
 
-    private Object suggestPrameterValue(Type type, Class<?> cls, String parameter)
-            throws JsonParseException, JsonMappingException, IOException {
+    private Object suggestPrameterValue(Type type, Class<?> cls,
+                                        String parameter) throws JsonParseException, JsonMappingException, IOException {
         PrimitiveType fromType = PrimitiveType.fromType(type);
         if (null != fromType) {
             DefaultConversionService service = new DefaultConversionService();
@@ -132,11 +138,13 @@ public class DubboHttpController {
                 return service.convert(parameter, cls);
             }
         } else {
-            if (null == parameter) return null;
+            if (null == parameter)
+                return null;
             try {
                 return Json.mapper().readValue(parameter, cls);
             } catch (Exception e) {
-                throw new IllegalArgumentException("The parameter value [" + parameter + "] should be json of [" + cls.getName() + "] Type.", e);
+                throw new IllegalArgumentException(
+                        "The parameter value [" + parameter + "] should be json of [" + cls.getName() + "] Type.", e);
             }
         }
         try {
