@@ -26,6 +26,16 @@ Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，Swagger围绕着Ope
 ## SpringBoot
 `@EnableDubboSwagger`开启dubbo的swagger文档。
 
+```java
+@EnableDubboSwagger
+public class Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+}
+```
+
 参见[spring-boot示例](swagger-dubbo-example/dubbo-provider-springboot)
 
 ## swagger-ui查看文档

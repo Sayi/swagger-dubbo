@@ -8,7 +8,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @EnableDubbo
 @EnableDubboSwagger
-//@ComponentScan(basePackages = {"com.deepoove.swagger.dubbo.config", "com.deepoove.swagger.dubbo.web"})
 public class Application {
 
     public static void main(String[] args) {
