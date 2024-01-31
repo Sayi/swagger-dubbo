@@ -47,6 +47,7 @@ public class ReferenceManager implements ApplicationContextAware, SmartInitializ
                 reference.setRegistries(service.getRegistries());
                 reference.setInterface(service.getInterfaceClass());
                 reference.setVersion(service.getVersion());
+                reference.setGroup(service.getGroup());
                 interfaceMapProxy.put(service.getInterfaceClass(), reference.get());
                 return reference.get();
             }
