@@ -1,7 +1,7 @@
 package com.deepoove.swagger.dubbo.web;
 
 import com.deepoove.swagger.dubbo.http.HttpMatch;
-import com.deepoove.swagger.dubbo.http.ReferenceManager;
+import com.deepoove.swagger.dubbo.config.ReferenceManager;
 import com.deepoove.swagger.dubbo.reader.NameDiscover;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -11,6 +11,7 @@ import io.swagger.util.PrimitiveType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.support.AopUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,9 @@ public class DubboHttpController {
     private static Logger logger = LoggerFactory.getLogger(DubboHttpController.class);
 
     private static final String CLUSTER_RPC = "rpc";
+
+    @Autowired
+    private ReferenceManager referenceManager;
 
     @Value("${swagger.dubbo.enable:true}")
     private boolean enable = true;
@@ -64,7 +68,7 @@ public class DubboHttpController {
         Method method = null;
         Object result = null;
 
-        Entry<Class<?>, Object> entry = ReferenceManager.getInstance().getRef(interfaceClass);
+        Entry<Class<?>, Object> entry = referenceManager.getRef(interfaceClass);
 
         if (null == entry) {
             logger.info("No Ref Service FOUND.");
@@ -86,7 +90,7 @@ public class DubboHttpController {
 
         logger.info("[Swagger-dubbo] Invoke by " + cluster);
         if (CLUSTER_RPC.equals(cluster)) {
-            ref = ReferenceManager.getInstance().getProxy(interfaceClass);
+            ref = referenceManager.getProxy(interfaceClass);
             if (null == ref) {
                 logger.info("No Ref Proxy Service FOUND.");
                 return new ResponseEntity<String>(HttpStatus.NOT_FOUND);

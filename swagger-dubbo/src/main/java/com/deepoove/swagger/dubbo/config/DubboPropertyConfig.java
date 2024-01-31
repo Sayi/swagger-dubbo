@@ -1,12 +1,12 @@
 package com.deepoove.swagger.dubbo.config;
 
-import com.deepoove.swagger.dubbo.http.ReferenceManager;
 import io.swagger.config.SwaggerConfig;
 import io.swagger.models.Contact;
 import io.swagger.models.Info;
 import io.swagger.models.Swagger;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.dubbo.config.ApplicationConfig;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
@@ -24,6 +24,9 @@ public class DubboPropertyConfig implements SwaggerConfig, ServletContextAware {
     @Value("${swagger.dubbo.application.artifactId:}")
     private String artifactId;
 
+    @Autowired
+    private ReferenceManager referenceManager;
+
     private ServletContext servletContext;
 
     private static String mavenDependency = "&lt;dependency&gt;<br/>"
@@ -34,7 +37,7 @@ public class DubboPropertyConfig implements SwaggerConfig, ServletContextAware {
 
     @Override
     public Swagger configure(Swagger swagger) {
-        ApplicationConfig application = ReferenceManager.getInstance().getApplication();
+        ApplicationConfig application = referenceManager.getApplication();
         if (null != application) {
             Info info = swagger.getInfo();
             if (info == null) {

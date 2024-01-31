@@ -6,9 +6,10 @@ import com.deepoove.swagger.dubbo.example.api.service.AccountService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.apache.dubbo.config.annotation.DubboService;
 
 @Api(value = "帐号服务")
-@Service
+@DubboService
 public class AccountServiceImpl implements AccountService {
 
 	@Override

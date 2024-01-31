@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.deepoove</groupId>
 		<artifactId>swagger-dubbo-project</artifactId>
-		<version>2.0.1_update</version>
+		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>swagger-dubbo</artifactId>
 	<packaging>jar</packaging>
@@ -20,13 +20,13 @@
 		<dependency>
 			<groupId>io.swagger</groupId>
 			<artifactId>swagger-core</artifactId>
-			<version>1.5.16</version>
+			<version>1.6.13</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.apache.dubbo</groupId>
 			<artifactId>dubbo</artifactId>
-			<version>2.7.5</version>
+			<version>3.2.0</version>
 			<scope>provided</scope>
 			<exclusions>
 				<exclusion>
@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>4.3.10.RELEASE</version>
+			<version>5.3.29</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
@@ -80,8 +80,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
+					<source>11</source>
+					<target>11</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
