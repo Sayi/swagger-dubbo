@@ -19,7 +19,7 @@ Dubbo |ˈdʌbəʊ| 是阿里巴巴提供的分布式框架，Swagger围绕着Ope
 <dependency>
   <groupId>com.deepoove</groupId>
   <artifactId>swagger-dubbo</artifactId>
-  <version>3.0.0-SNAPSHOT</version>
+  <version>3.0.0-beta</version>
 </dependency>
 ```
 
